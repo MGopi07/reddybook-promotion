@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { ChevronLeft, ChevronRight, Zap, Trophy, Play, Pause, MapPin } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Zap, Trophy, Play, Pause, MapPin, Eye, Radio } from 'lucide-react';
 import { SAMPLE_MATCHES, MatchScore } from '@/lib/matches';
 import JoinModal from '@/components/JoinModal';
+import TeamFlag from '@/components/TeamFlag';
 import '@/styles/livescores.css';
 
 type FilterType = 'ALL' | 'LIVE' | 'UPCOMING' | 'RESULT';
@@ -260,12 +261,58 @@ export default function LiveScoreSlider() {
                 No matches found in this category.
               </div>
             ) : (
-              filteredMatches.map((match) => (
-                <article
-                  key={match.id}
-                  className={`match-card ${match.status === 'LIVE' ? 'is-live' : ''}`}
-                  onClick={() => handleMatchClick(match)}
-                >
+              filteredMatches.map((match) => {
+                if (match.isLiveStreamCard) {
+                  return (
+                    <article
+                      key={match.id}
+                      className="match-card match-card-stream is-live"
+                      onClick={() => handleMatchClick(match)}
+                      aria-label="Watch Live Cricket Stream"
+                    >
+                      {/* Top Stream Header */}
+                      <div className="stream-card-header">
+                        <span className="stream-badge-live">
+                          <span className="stream-live-beacon" />
+                          LIVE STREAM
+                        </span>
+                        <span className="stream-badge-viewers">
+                          <Eye size={12} />
+                          {match.streamViewers || '248.5K'}
+                        </span>
+                      </div>
+
+                      {/* Center Play Button & Title */}
+                      <div className="stream-card-body">
+                        <div className="stream-play-circle">
+                          <span className="stream-play-ring" />
+                          <Play size={16} fill="#070A0F" stroke="#070A0F" style={{ marginLeft: 2 }} />
+                        </div>
+                        <h4 className="stream-match-title">{match.streamTitle || 'INDIA VS AUSTRALIA'}</h4>
+                        <p className="stream-match-sub">{match.streamSubtitle || 'Super 8 Marquee Clash • 4K Live Broadcast'}</p>
+                      </div>
+
+                      {/* Stream Card Footer */}
+                      <div className="match-card-footer stream-card-footer">
+                        <span className="stream-spec-pill">
+                          <Radio size={11} style={{ marginRight: 3, display: 'inline', verticalAlign: '-1px' }} />
+                          4K HDR • Multi-Cam
+                        </span>
+                        <span className="btn-match-action btn-stream-action">
+                          <Play size={10} fill="#070A0F" stroke="#070A0F" />
+                          <span>Watch Now</span>
+                        </span>
+                      </div>
+                    </article>
+                  );
+                }
+
+                return (
+                  <article
+                    key={match.id}
+                    className={`match-card ${match.status === 'LIVE' ? 'is-live' : ''}`}
+                    onClick={() => handleMatchClick(match)}
+                  >
                   {/* Two-Row Card Header: Clean & Never Clipped */}
                   <div className="match-card-header">
                     <div className="match-card-top-row">
@@ -297,14 +344,12 @@ export default function LiveScoreSlider() {
                     {/* Team 1 */}
                     <div className="match-team-row">
                       <div className="match-team-info">
-                        <span
-                          className="match-team-avatar"
-                          style={{
-                            backgroundColor: match.team1.color || '#1E293B',
-                          }}
-                        >
-                          {match.team1.shortName.slice(0, 3)}
-                        </span>
+                        <TeamFlag
+                          shortName={match.team1.shortName}
+                          name={match.team1.name}
+                          size={24}
+                          className="match-team-flag"
+                        />
                         <span className="match-team-name">{match.team1.name}</span>
                       </div>
                       <div className="match-team-score-group">
@@ -318,14 +363,12 @@ export default function LiveScoreSlider() {
                     {/* Team 2 */}
                     <div className="match-team-row">
                       <div className="match-team-info">
-                        <span
-                          className="match-team-avatar"
-                          style={{
-                            backgroundColor: match.team2.color || '#334155',
-                          }}
-                        >
-                          {match.team2.shortName.slice(0, 3)}
-                        </span>
+                        <TeamFlag
+                          shortName={match.team2.shortName}
+                          name={match.team2.name}
+                          size={24}
+                          className="match-team-flag"
+                        />
                         <span className="match-team-name">{match.team2.name}</span>
                       </div>
                       <div className="match-team-score-group">
@@ -376,8 +419,9 @@ export default function LiveScoreSlider() {
                     </span>
                   </div>
                 </article>
-              ))
-            )}
+                  );
+                })
+              )}
           </div>
         </div>
 

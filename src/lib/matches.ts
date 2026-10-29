@@ -21,6 +21,11 @@ export interface MatchScore {
   rrr?: string;
   requiredEquation?: string;
   linkText?: string;
+  isLiveStreamCard?: boolean;
+  streamImage?: string;
+  streamViewers?: string;
+  streamTitle?: string;
+  streamSubtitle?: string;
 }
 
 export const SAMPLE_MATCHES: MatchScore[] = [
@@ -100,6 +105,34 @@ export const SAMPLE_MATCHES: MatchScore[] = [
     },
   },
   {
+    id: 'm-6',
+    series: 'OFFICIAL 4K BROADCAST',
+    format: 'LIVE STREAM',
+    matchNumber: 'Multi-Cam • Stadium Feed',
+    venue: 'Kensington Oval, Barbados',
+    status: 'LIVE',
+    statusText: 'Broadcasting in 4K HDR • Multi-Language Audio Feed',
+    isLiveStreamCard: true,
+    streamImage: '/images/live_stream_card_bg.jpg',
+    streamViewers: '248.5K',
+    streamTitle: 'INDIA VS AUSTRALIA',
+    streamSubtitle: 'Super 8 Marquee Clash • Watch Every Ball Live in 4K',
+    team1: {
+      name: 'Australia',
+      shortName: 'AUS',
+      color: '#00843D',
+      score: '185/6',
+      overs: '20.0',
+    },
+    team2: {
+      name: 'India',
+      shortName: 'IND',
+      color: '#0055A5',
+      score: '162/3',
+      overs: '17.2',
+    },
+  },
+  {
     id: 'm-4',
     series: 'PAKISTAN TOUR OF AUSTRALIA',
     format: '2nd T20I',
@@ -139,29 +172,6 @@ export const SAMPLE_MATCHES: MatchScore[] = [
       shortName: 'IND',
       color: '#0055A5',
       score: 'Trophy Opener',
-    },
-  },
-  {
-    id: 'm-6',
-    series: "ICC MEN'S T20 WORLD CUP",
-    format: 'T20I',
-    matchNumber: 'Group Stage • Match 39',
-    venue: 'Daren Sammy Ground, Gros Islet',
-    status: 'RESULT',
-    statusText: 'West Indies won by 5 wickets with 8 balls remaining',
-    team1: {
-      name: 'Sri Lanka',
-      shortName: 'SL',
-      color: '#002F6C',
-      score: '172/7',
-      overs: '20.0',
-    },
-    team2: {
-      name: 'West Indies',
-      shortName: 'WI',
-      color: '#7B002C',
-      score: '176/5',
-      overs: '18.4',
     },
   },
 ];

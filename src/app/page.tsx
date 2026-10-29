@@ -3,6 +3,7 @@ import NewsTicker from '@/components/NewsTicker';
 import LiveScoreSlider from '@/components/LiveScoreSlider';
 import FeaturedStory from '@/components/FeaturedStory';
 import PromotionalBanner from '@/components/PromotionalBanner';
+import CricketHubSection from '@/components/CricketHubSection';
 import LatestNewsSection from '@/components/LatestNewsSection';
 import AnalysisBanner from '@/components/AnalysisBanner';
 import { ARTICLES } from '@/lib/content';
@@ -28,10 +29,13 @@ export default function HomePage() {
       {/* 4. Promotional Banner */}
       <PromotionalBanner />
 
-      {/* 5. Latest News Section with search & category filters */}
+      {/* 5. Cricket Hub & Games Section (Quick Access + News Split + Featured Games) */}
+      <CricketHubSection />
+
+      {/* 6. Latest News Section with search & category filters */}
       <LatestNewsSection />
 
-      {/* 6. Analysis Feature Banner */}
+      {/* 7. Analysis Feature Banner */}
       <AnalysisBanner />
     </>
   );
