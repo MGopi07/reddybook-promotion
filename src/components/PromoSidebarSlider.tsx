@@ -123,10 +123,10 @@ export default function PromoSidebarSlider() {
             className="promo-ad-card has-bg-image"
             style={{
               backgroundImage: card.bgImage
-                ? `linear-gradient(90deg, rgba(8, 12, 20, 0.95) 0%, rgba(8, 12, 20, 0.88) 52%, rgba(8, 12, 20, 0.45) 86%, rgba(8, 12, 20, 0.58) 100%), url(${card.bgImage})`
+                ? `linear-gradient(105deg, rgba(8, 12, 20, 0.55) 0%, rgba(8, 12, 20, 0.30) 48%, rgba(8, 12, 20, 0.05) 100%), url(${card.bgImage})`
                 : card.bgGradient,
               backgroundSize: 'cover',
-              backgroundPosition: 'center right',
+              backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
             }}
             onClick={(e) => handleAction(card, e)}

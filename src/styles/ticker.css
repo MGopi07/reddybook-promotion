@@ -4,10 +4,10 @@
    ========================================================================== */
 
 .breaking-news-ticker-bar {
-  background: #070A0F;
-  border-top: 1px solid rgba(229, 184, 66, 0.22);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  height: 38px;
+  background: linear-gradient(180deg, #070A0F 0%, #0A0E17 100%);
+  border-top: 1px solid rgba(229, 184, 66, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  height: 42px;
   position: relative;
   overflow: hidden;
   z-index: 20;
@@ -19,20 +19,27 @@
   height: 100%;
   width: 100%;
   position: relative;
+  gap: 14px;
 }
 
-/* Left Fixed Badge: BREAKING NEWS */
+/* Left Fixed Pill Badge: BREAKING NEWS */
 .breaking-news-badge {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: #070A0F;
-  padding: 0 16px;
-  height: 100%;
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, rgba(229, 184, 66, 0.16) 0%, rgba(229, 184, 66, 0.05) 100%);
+  border: 1px solid rgba(229, 184, 66, 0.35);
+  padding: 5px 14px;
+  border-radius: 9999px;
   flex-shrink: 0;
   z-index: 10;
-  box-shadow: 10px 0 16px #070A0F;
+  box-shadow: 0 0 14px rgba(229, 184, 66, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
+}
+
+.breaking-news-badge:hover {
+  border-color: rgba(229, 184, 66, 0.6);
+  box-shadow: 0 0 18px rgba(229, 184, 66, 0.25);
 }
 
 .breaking-pulse-dot {
@@ -40,7 +47,7 @@
   height: 7px;
   background: #EF4444;
   border-radius: 50%;
-  box-shadow: 0 0 8px rgba(239, 68, 68, 0.8);
+  box-shadow: 0 0 8px #EF4444, 0 0 4px #F87171;
   animation: breakingPulse 1.4s ease-in-out infinite;
 }
 
@@ -61,22 +68,24 @@
 
 .breaking-badge-text {
   font-family: var(--font-heading);
-  font-size: 0.82rem;
+  font-size: 0.74rem;
   font-weight: 900;
-  letter-spacing: 0.09em;
-  color: var(--accent-gold);
+  letter-spacing: 0.1em;
+  color: #F5D77F;
   text-transform: uppercase;
   white-space: nowrap;
 }
 
-/* Marquee Scroll Container */
+/* Marquee Scroll Container with Broadcast Gradient Feather */
 .breaking-news-scroll-container {
   flex: 1;
   height: 100%;
   overflow: hidden;
   position: relative;
-  mask-image: linear-gradient(90deg, transparent 0%, #000000 2%, #000000 98%, transparent 100%);
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000000 2%, #000000 98%, transparent 100%);
+  display: flex;
+  align-items: center;
+  mask-image: linear-gradient(90deg, transparent 0%, #000000 45px, #000000 calc(100% - 45px), transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000000 45px, #000000 calc(100% - 45px), transparent 100%);
 }
 
 .breaking-news-track {
@@ -84,7 +93,7 @@
   align-items: center;
   height: 100%;
   width: max-content;
-  animation: breakingNewsScroll 42s linear infinite;
+  animation: breakingNewsScroll 48s linear infinite;
 }
 
 .breaking-news-scroll-container:hover .breaking-news-track {
@@ -105,15 +114,21 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 0 6px;
+  padding: 0 10px;
   cursor: pointer;
   user-select: none;
   white-space: nowrap;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.breaking-news-item:hover {
+  transform: translateY(-1px);
 }
 
 .breaking-news-item:hover .news-headline-text {
-  color: var(--accent-gold);
+  color: #F5D77F;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 /* Category Tag Pills */
@@ -122,9 +137,11 @@
   font-weight: 850;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  padding: 2px 7px;
-  border-radius: 4px;
-  line-height: 1.2;
+  padding: 3px 8px;
+  border-radius: 5px;
+  line-height: 1.1;
+  display: inline-flex;
+  align-items: center;
 }
 
 .news-tag-pill.tag-red {
@@ -153,7 +170,7 @@
 
 /* Headline Text */
 .news-headline-text {
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 550;
   color: #E2E8F0;
   letter-spacing: 0.01em;
@@ -165,33 +182,38 @@
   font-size: 0.68rem;
   font-weight: 600;
   color: #94A3B8;
-  background: rgba(255, 255, 255, 0.05);
-  padding: 1px 6px;
-  border-radius: 3px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 2px 7px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: inline-flex;
+  align-items: center;
 }
 
 /* Separator Diamond */
 .news-item-separator {
-  color: rgba(229, 184, 66, 0.45);
-  font-size: 0.6rem;
-  margin: 0 10px;
+  color: rgba(229, 184, 66, 0.5);
+  font-size: 0.55rem;
+  margin: 0 14px;
   user-select: none;
+  display: inline-flex;
+  align-items: center;
+  filter: drop-shadow(0 0 4px rgba(229, 184, 66, 0.35));
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .breaking-news-ticker-bar {
-    height: 36px;
+    height: 38px;
   }
 
   .breaking-news-badge {
-    padding: 0 10px;
+    padding: 3px 10px;
     gap: 6px;
   }
 
   .breaking-badge-text {
-    font-size: 0.72rem;
+    font-size: 0.68rem;
   }
 
   .news-headline-text {
@@ -200,6 +222,6 @@
 
   .news-tag-pill {
     font-size: 0.6rem;
-    padding: 1px 5px;
+    padding: 2px 6px;
   }
 }

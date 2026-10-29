@@ -68,8 +68,8 @@ export default function NewsTicker() {
 
   return (
     <div className="breaking-news-ticker-bar" role="region" aria-label="Breaking Sports News">
-      <div className="breaking-news-inner">
-        {/* Left Fixed Badge: BREAKING NEWS */}
+      <div className="container breaking-news-inner">
+        {/* Left Fixed Pill Badge: BREAKING NEWS */}
         <div className="breaking-news-badge">
           <span className="breaking-pulse-dot" />
           <span className="breaking-badge-text">BREAKING NEWS</span>
