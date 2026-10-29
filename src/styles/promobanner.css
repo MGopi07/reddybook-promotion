@@ -1,0 +1,73 @@
+.promo-strip {
+  margin-top: 10px;
+  margin-bottom: 40px;
+}
+
+.promo-container {
+  background: linear-gradient(90deg, #101620 0%, #151F2E 50%, #101620 100%);
+  border: 1px solid var(--border-subtle);
+  border-left: 4px solid var(--accent-red);
+  border-radius: var(--radius-md);
+  padding: 24px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.promo-left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 780px;
+}
+
+.promo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--accent-red);
+}
+
+.promo-title {
+  font-size: 1.7rem;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  color: #FFFFFF;
+  line-height: 1.1;
+}
+
+.promo-subtitle {
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.promo-cta-box {
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .promo-container {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+  }
+
+  .promo-title {
+    font-size: 1.4rem;
+  }
+
+  .promo-cta-box {
+    width: 100%;
+  }
+
+  .promo-cta-box .btn {
+    width: 100%;
+  }
+}

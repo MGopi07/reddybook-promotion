@@ -1,0 +1,457 @@
+/* ==========================================================================
+   SPORTS YOU CAN BET ON AT REDDYBOOK STYLES
+   Championship Gold & Dark Luxury Sportsbook UI
+   ========================================================================== */
+
+.sports-betting-section {
+  padding: 48px 0 36px 0;
+  background: linear-gradient(180deg, #070A0F 0%, #0A0E17 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.sports-betting-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* Header & Eyebrow */
+.sports-betting-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.sports-betting-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(18, 26, 38, 0.9);
+  border: 1px solid rgba(229, 184, 66, 0.25);
+  color: var(--accent-gold);
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 9999px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.sports-betting-title {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  color: #FFFFFF;
+  margin: 0 0 24px 0;
+  text-transform: uppercase;
+}
+
+.brand-gold-text {
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 950;
+}
+
+/* Sports Navigation Tabs (Pills) */
+.sports-tabs-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.sports-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #0E1522;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #94A3B8;
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 10px 22px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.sports-tab-btn:hover {
+  background: #141E30;
+  color: #FFFFFF;
+  border-color: rgba(229, 184, 66, 0.3);
+}
+
+.sports-tab-btn.active {
+  background: var(--gold-gradient);
+  color: #070A0F;
+  border-color: transparent;
+  box-shadow: 0 4px 18px rgba(229, 184, 66, 0.45), 0 0 10px rgba(229, 184, 66, 0.25);
+  transform: translateY(-1px);
+}
+
+.sports-tab-btn.active svg,
+.sports-tab-btn.active span.tab-icon {
+  filter: brightness(0);
+}
+
+/* Main Two-Column Box */
+.sports-feature-box {
+  background: #090E17;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 36px 36px;
+  display: grid;
+  grid-template-columns: 1.15fr 0.95fr;
+  gap: 36px;
+  position: relative;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.sports-feature-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 20px;
+  right: 20px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(229, 184, 66, 0.35), transparent);
+}
+
+/* Left Column: Editorial Information */
+.sports-info-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sports-info-title-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.sports-info-icon-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: rgba(229, 184, 66, 0.12);
+  border: 1px solid rgba(229, 184, 66, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-gold);
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.sports-info-heading {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  margin: 0;
+}
+
+.sports-info-intro {
+  color: #A0AEC0;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  margin: 0 0 22px 0;
+}
+
+/* Callout Box with Gold Left Border */
+.sports-info-callout {
+  border-left: 3px solid var(--accent-gold);
+  background: rgba(229, 184, 66, 0.04);
+  padding: 16px 20px;
+  border-radius: 0 10px 10px 0;
+  margin-bottom: 22px;
+}
+
+.sports-callout-title {
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  margin-bottom: 8px;
+}
+
+.sports-callout-desc {
+  color: #CBD5E1;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Bottom Note Box */
+.sports-info-bottom-note {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 14px 18px;
+  color: #94A3B8;
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+/* Right Column: Live Match & Live Odds Market Widget */
+.sports-widget-col {
+  background: #0C121D;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Widget Header */
+.sports-widget-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  margin-bottom: 16px;
+}
+
+.sports-widget-live-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #10B981;
+  font-size: 0.7rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.widget-live-dot {
+  width: 7px;
+  height: 7px;
+  background: #10B981;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #10B981;
+  animation: widgetPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes widgetPulse {
+  0% { transform: scale(0.9); opacity: 0.6; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.6; }
+}
+
+.sports-widget-series {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+/* Match Scorecard Mini Box */
+.sports-widget-match-box {
+  background: #080C14;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.widget-match-title {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 850;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  margin-bottom: 6px;
+}
+
+.widget-match-score {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--accent-gold);
+  letter-spacing: 0.02em;
+  margin-bottom: 6px;
+}
+
+.widget-match-equation {
+  font-size: 0.72rem;
+  color: #94A3B8;
+  font-weight: 600;
+}
+
+/* Odds Market Table */
+.sports-odds-table {
+  margin-bottom: 20px;
+}
+
+.odds-table-header {
+  display: grid;
+  grid-template-columns: 1fr 68px 68px;
+  gap: 8px;
+  padding-bottom: 8px;
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.odds-col-market {
+  text-align: left;
+}
+
+.odds-col-back {
+  color: #60A5FA;
+}
+
+.odds-col-lay {
+  color: #F472B6;
+}
+
+/* Odds Rows */
+.odds-table-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.odds-row {
+  display: grid;
+  grid-template-columns: 1fr 68px 68px;
+  gap: 8px;
+  align-items: center;
+}
+
+.odds-row-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #E2E8F0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn-odds-back,
+.btn-odds-lay {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  border: none;
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 900;
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.btn-odds-back {
+  background: #1A56DB;
+  box-shadow: 0 2px 8px rgba(26, 86, 219, 0.3);
+}
+
+.btn-odds-back:hover {
+  background: #2563EB;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.45);
+}
+
+.btn-odds-lay {
+  background: #E0006C;
+  box-shadow: 0 2px 8px rgba(224, 0, 108, 0.3);
+}
+
+.btn-odds-lay:hover {
+  background: #F43F5E;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(244, 63, 94, 0.45);
+}
+
+/* Bottom Full-Width CTA Button */
+.btn-register-place-bet {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--gold-gradient);
+  color: #070A0F;
+  border: none;
+  border-radius: 8px;
+  padding: 13px 20px;
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(229, 184, 66, 0.4), 0 0 10px rgba(229, 184, 66, 0.25);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.btn-register-place-bet:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(229, 184, 66, 0.6), 0 0 14px rgba(229, 184, 66, 0.35);
+  filter: brightness(1.05);
+}
+
+.btn-register-place-bet:active {
+  transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .sports-feature-box {
+    grid-template-columns: 1fr;
+    padding: 24px 20px;
+    gap: 28px;
+  }
+
+  .sports-betting-title {
+    font-size: 1.7rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .sports-tabs-wrapper {
+    gap: 8px;
+  }
+
+  .sports-tab-btn {
+    padding: 8px 16px;
+    font-size: 0.74rem;
+  }
+
+  .sports-feature-box {
+    padding: 20px 16px;
+  }
+
+  .widget-match-score {
+    font-size: 1.35rem;
+  }
+}
