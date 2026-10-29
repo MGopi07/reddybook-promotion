@@ -19,27 +19,20 @@
   height: 100%;
   width: 100%;
   position: relative;
-  gap: 14px;
+  gap: 0;
 }
 
-/* Left Fixed Pill Badge: BREAKING NEWS */
+/* Left Fixed Badge: BREAKING NEWS (Flat with Right Divider matching Screenshot 1) */
 .breaking-news-badge {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 8px;
-  background: linear-gradient(135deg, rgba(229, 184, 66, 0.16) 0%, rgba(229, 184, 66, 0.05) 100%);
-  border: 1px solid rgba(229, 184, 66, 0.35);
-  padding: 5px 14px;
-  border-radius: 9999px;
+  background: transparent;
+  padding: 0 16px 0 0;
+  height: 100%;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
   flex-shrink: 0;
   z-index: 10;
-  box-shadow: 0 0 14px rgba(229, 184, 66, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  transition: all 0.2s ease;
-}
-
-.breaking-news-badge:hover {
-  border-color: rgba(229, 184, 66, 0.6);
-  box-shadow: 0 0 18px rgba(229, 184, 66, 0.25);
 }
 
 .breaking-pulse-dot {
@@ -47,7 +40,7 @@
   height: 7px;
   background: #EF4444;
   border-radius: 50%;
-  box-shadow: 0 0 8px #EF4444, 0 0 4px #F87171;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.85);
   animation: breakingPulse 1.4s ease-in-out infinite;
 }
 
@@ -68,15 +61,15 @@
 
 .breaking-badge-text {
   font-family: var(--font-heading);
-  font-size: 0.74rem;
-  font-weight: 900;
-  letter-spacing: 0.1em;
-  color: #F5D77F;
+  font-size: 0.82rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  color: var(--accent-gold);
   text-transform: uppercase;
   white-space: nowrap;
 }
 
-/* Marquee Scroll Container with Broadcast Gradient Feather */
+/* Marquee Scroll Container */
 .breaking-news-scroll-container {
   flex: 1;
   height: 100%;
@@ -84,8 +77,9 @@
   position: relative;
   display: flex;
   align-items: center;
-  mask-image: linear-gradient(90deg, transparent 0%, #000000 45px, #000000 calc(100% - 45px), transparent 100%);
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000000 45px, #000000 calc(100% - 45px), transparent 100%);
+  padding-left: 14px;
+  mask-image: linear-gradient(90deg, transparent 0%, #000000 24px, #000000 calc(100% - 24px), transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000000 24px, #000000 calc(100% - 24px), transparent 100%);
 }
 
 .breaking-news-track {
