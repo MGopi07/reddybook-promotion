@@ -12,6 +12,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://reddybook.club'),
   title: 'REDDY BOOK | Cricket Intelligence, Match News & Video Highlights',
   description:
     'The premier destination for in-depth cricket journalism, verified match analysis, tactical breakdowns, pitch telemetry and game day intelligence powered by Reddy Book.',

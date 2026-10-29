@@ -131,7 +131,7 @@ export default function Footer() {
           <div className="footer-join-col">
             <h4 className="footer-heading">REDDY BOOK VIP Club</h4>
             <p className="footer-join-desc">
-              Join India's leading sports intelligence & gaming platform. Get your instant VIP ID with 24/7 dedicated support.
+              Join India&apos;s leading sports intelligence &amp; gaming platform. Get your instant VIP ID with 24/7 dedicated support.
             </p>
             <button
               className="footer-join-now-btn"

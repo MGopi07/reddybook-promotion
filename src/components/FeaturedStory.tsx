@@ -115,7 +115,7 @@ export default function FeaturedStory({
               </span>
               <span className="badge neutral">{currentArticle.category}</span>
               <span className="story-index-indicator">
-                STORY 0{currentIndex + 1} // 0{slides.length}
+                {`STORY 0${currentIndex + 1} // 0${slides.length}`}
               </span>
               <span className="featured-time">
                 <Clock size={12} />

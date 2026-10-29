@@ -120,9 +120,14 @@ export default function PromoSidebarSlider() {
         {[card1, card2].map((card, idx) => (
           <article
             key={`${card.id}-${startIndex}-${idx}`}
-            className="promo-ad-card"
+            className="promo-ad-card has-bg-image"
             style={{
-              background: card.bgGradient,
+              backgroundImage: card.bgImage
+                ? `linear-gradient(90deg, rgba(8, 12, 20, 0.95) 0%, rgba(8, 12, 20, 0.88) 52%, rgba(8, 12, 20, 0.45) 86%, rgba(8, 12, 20, 0.58) 100%), url(${card.bgImage})`
+                : card.bgGradient,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center right',
+              backgroundRepeat: 'no-repeat',
             }}
             onClick={(e) => handleAction(card, e)}
           >
@@ -166,8 +171,6 @@ export default function PromoSidebarSlider() {
                 )}
                 <span>{card.ctaText}</span>
               </button>
-
-              <span className="promo-terms-hint">T&amp;C Apply • 18+</span>
             </div>
           </article>
         ))}
