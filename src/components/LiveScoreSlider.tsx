@@ -15,9 +15,27 @@ export default function LiveScoreSlider() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
+  const [cardsPerView, setCardsPerView] = useState(3);
 
   const sliderRef = useRef<HTMLDivElement>(null);
   const userInteractedTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  // Responsive cardsPerView tracking
+  useEffect(() => {
+    const updateCardsPerView = () => {
+      const width = window.innerWidth;
+      if (width <= 768) {
+        setCardsPerView(1);
+      } else if (width <= 1099) {
+        setCardsPerView(2);
+      } else {
+        setCardsPerView(3);
+      }
+    };
+    updateCardsPerView();
+    window.addEventListener('resize', updateCardsPerView);
+    return () => window.removeEventListener('resize', updateCardsPerView);
+  }, []);
 
   // Filtered matches
   const filteredMatches = SAMPLE_MATCHES.filter((m) => {
@@ -29,6 +47,9 @@ export default function LiveScoreSlider() {
   const upcomingCount = SAMPLE_MATCHES.filter((m) => m.status === 'UPCOMING').length;
   const resultCount = SAMPLE_MATCHES.filter((m) => m.status === 'RESULT').length;
 
+  const maxScrollIndex = Math.max(0, filteredMatches.length - cardsPerView);
+  const totalDots = filteredMatches.length > cardsPerView ? maxScrollIndex + 1 : 0;
+
   // Track scroll position to update active index
   const handleScroll = useCallback(() => {
     if (!sliderRef.current) return;
@@ -38,8 +59,8 @@ export default function LiveScoreSlider() {
     const firstCard = children[0] as HTMLElement;
     const cardWidth = firstCard.offsetWidth + 14;
     const index = Math.round(scrollLeft / cardWidth);
-    setActiveIndex(Math.min(index, filteredMatches.length - 1));
-  }, [filteredMatches.length]);
+    setActiveIndex(Math.min(Math.max(0, index), maxScrollIndex));
+  }, [maxScrollIndex]);
 
   useEffect(() => {
     const slider = sliderRef.current;
@@ -53,9 +74,9 @@ export default function LiveScoreSlider() {
     };
   }, [handleScroll]);
 
-  // Smooth Auto-sliding Engine (snaps card by card to exact offsetLeft)
+  // Smooth Auto-sliding Engine (loops smoothly within scrollable range)
   useEffect(() => {
-    if (!isAutoPlaying || isHovered || filteredMatches.length <= 1) return;
+    if (!isAutoPlaying || isHovered || maxScrollIndex <= 0) return;
 
     const interval = setInterval(() => {
       if (!sliderRef.current) return;
@@ -63,7 +84,7 @@ export default function LiveScoreSlider() {
       if (children.length === 0) return;
 
       setActiveIndex((prev) => {
-        const nextIdx = prev + 1 >= filteredMatches.length ? 0 : prev + 1;
+        const nextIdx = prev >= maxScrollIndex ? 0 : prev + 1;
         const target = children[nextIdx] as HTMLElement;
         if (target && sliderRef.current) {
           sliderRef.current.scrollTo({ left: target.offsetLeft, behavior: 'smooth' });
@@ -73,16 +94,16 @@ export default function LiveScoreSlider() {
     }, 4500);
 
     return () => clearInterval(interval);
-  }, [isAutoPlaying, isHovered, filteredMatches.length]);
+  }, [isAutoPlaying, isHovered, maxScrollIndex]);
 
   const handleManualNav = (direction: 'left' | 'right') => {
-    if (!sliderRef.current) return;
+    if (!sliderRef.current || maxScrollIndex <= 0) return;
     const children = sliderRef.current.children;
     if (children.length === 0) return;
 
     let targetIdx = direction === 'right' ? activeIndex + 1 : activeIndex - 1;
-    if (targetIdx >= filteredMatches.length) targetIdx = 0;
-    if (targetIdx < 0) targetIdx = filteredMatches.length - 1;
+    if (targetIdx > maxScrollIndex) targetIdx = 0;
+    if (targetIdx < 0) targetIdx = maxScrollIndex;
 
     const target = children[targetIdx] as HTMLElement;
     if (target) {
@@ -100,11 +121,20 @@ export default function LiveScoreSlider() {
 
   const scrollToCard = (index: number) => {
     if (!sliderRef.current) return;
+    const clampedIndex = Math.min(Math.max(0, index), maxScrollIndex);
     const children = sliderRef.current.children;
-    if (children[index]) {
-      const target = children[index] as HTMLElement;
+    if (children[clampedIndex]) {
+      const target = children[clampedIndex] as HTMLElement;
       sliderRef.current.scrollTo({ left: target.offsetLeft, behavior: 'smooth' });
+      setActiveIndex(clampedIndex);
     }
+
+    // Pause auto-play for 6 seconds on user interaction
+    setIsHovered(true);
+    if (userInteractedTimeout.current) clearTimeout(userInteractedTimeout.current);
+    userInteractedTimeout.current = setTimeout(() => {
+      setIsHovered(false);
+    }, 6000);
   };
 
   const handleMatchClick = (match: MatchScore) => {
@@ -159,7 +189,8 @@ export default function LiveScoreSlider() {
                 className={`match-filter-btn ${filter === 'ALL' ? 'active' : ''}`}
                 onClick={() => {
                   setFilter('ALL');
-                  if (sliderRef.current) sliderRef.current.scrollTo({ left: 0 });
+                  setActiveIndex(0);
+                  if (sliderRef.current) sliderRef.current.scrollTo({ left: 0, behavior: 'smooth' });
                 }}
               >
                 All Matches ({SAMPLE_MATCHES.length})
@@ -168,7 +199,8 @@ export default function LiveScoreSlider() {
                 className={`match-filter-btn ${filter === 'LIVE' ? 'active' : ''}`}
                 onClick={() => {
                   setFilter('LIVE');
-                  if (sliderRef.current) sliderRef.current.scrollTo({ left: 0 });
+                  setActiveIndex(0);
+                  if (sliderRef.current) sliderRef.current.scrollTo({ left: 0, behavior: 'smooth' });
                 }}
               >
                 🔴 Live ({liveCount})
@@ -177,7 +209,8 @@ export default function LiveScoreSlider() {
                 className={`match-filter-btn ${filter === 'UPCOMING' ? 'active' : ''}`}
                 onClick={() => {
                   setFilter('UPCOMING');
-                  if (sliderRef.current) sliderRef.current.scrollTo({ left: 0 });
+                  setActiveIndex(0);
+                  if (sliderRef.current) sliderRef.current.scrollTo({ left: 0, behavior: 'smooth' });
                 }}
               >
                 Upcoming ({upcomingCount})
@@ -186,7 +219,8 @@ export default function LiveScoreSlider() {
                 className={`match-filter-btn ${filter === 'RESULT' ? 'active' : ''}`}
                 onClick={() => {
                   setFilter('RESULT');
-                  if (sliderRef.current) sliderRef.current.scrollTo({ left: 0 });
+                  setActiveIndex(0);
+                  if (sliderRef.current) sliderRef.current.scrollTo({ left: 0, behavior: 'smooth' });
                 }}
               >
                 Recent ({resultCount})
@@ -348,14 +382,14 @@ export default function LiveScoreSlider() {
         </div>
 
         {/* Carousel Position Indicator Dots */}
-        {filteredMatches.length > 3 && (
+        {totalDots > 1 && (
           <div className="match-slider-dots-row">
-            {filteredMatches.map((_, i) => (
+            {Array.from({ length: totalDots }).map((_, i) => (
               <button
                 key={i}
                 className={`match-slider-dot ${i === activeIndex ? 'active' : ''}`}
                 onClick={() => scrollToCard(i)}
-                aria-label={`Go to match ${i + 1}`}
+                aria-label={`Go to slide ${i + 1}`}
               />
             ))}
           </div>

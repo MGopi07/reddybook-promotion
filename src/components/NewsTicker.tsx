@@ -4,177 +4,113 @@ import React, { useState } from 'react';
 import JoinModal from './JoinModal';
 import '@/styles/ticker.css';
 
-interface MarketItem {
+interface BreakingNewsItem {
   id: string;
-  sport: string;
-  sportType: 'cricket' | 'esports' | 'football' | 'tennis' | 'kabaddi';
-  sportIcon: string;
-  title: string;
-  score: string;
-  odds1Label: string;
-  odds1Value: string;
-  odds2Label: string;
-  odds2Value: string;
+  tag: string;
+  tagColor: 'gold' | 'red' | 'blue' | 'emerald';
+  headline: string;
+  time: string;
 }
 
-const LIVE_MARKETS: MarketItem[] = [
+const BREAKING_NEWS: BreakingNewsItem[] = [
   {
-    id: 'mkt-1',
-    sport: 'TENNIS',
-    sportType: 'tennis',
-    sportIcon: '🎾',
-    title: 'Djokovic vs Alcaraz',
-    score: '6-4, 3-6, 4-2',
-    odds1Label: 'DJO',
-    odds1Value: '1.80',
-    odds2Label: 'ALC',
-    odds2Value: '2.10',
+    id: 'news-1',
+    tag: 'T20 WORLD CUP',
+    tagColor: 'red',
+    headline: 'India vs Australia Super 8: Bumrah and Head set for high-voltage powerplay duel under lights',
+    time: 'JUST IN',
   },
   {
-    id: 'mkt-2',
-    sport: 'IPL',
-    sportType: 'cricket',
-    sportIcon: '🏏',
-    title: 'CSK vs MI',
-    score: '178/2 • 16.4 ov',
-    odds1Label: 'CSK',
-    odds1Value: '1.62',
-    odds2Label: 'MI',
-    odds2Value: '2.40',
+    id: 'news-2',
+    tag: 'IPL 2025',
+    tagColor: 'gold',
+    headline: 'Mega Auction Retentions: Franchises submit official core player lists ahead of 5 PM deadline',
+    time: '8m ago',
   },
   {
-    id: 'mkt-3',
-    sport: 'ESPORTS',
-    sportType: 'esports',
-    sportIcon: '🎮',
-    title: 'Vitality vs G2',
-    score: '10-8 • Map 2',
-    odds1Label: 'VIT',
-    odds1Value: '1.80',
-    odds2Label: 'G2',
-    odds2Value: '2.10',
+    id: 'news-3',
+    tag: 'BORDER-GAVASKAR',
+    tagColor: 'blue',
+    headline: 'Perth Pitch Report: Curator promises traditional carry and sharp bounce for 1st Test',
+    time: '22m ago',
   },
   {
-    id: 'mkt-4',
-    sport: 'CRICKET',
-    sportType: 'cricket',
-    sportIcon: '🏏',
-    title: 'India vs Australia',
-    score: '284/4 • 42.3 ov',
-    odds1Label: 'IND',
-    odds1Value: '1.45',
-    odds2Label: 'AUS',
-    odds2Value: '3.20',
+    id: 'news-4',
+    tag: 'TEAM INTEL',
+    tagColor: 'emerald',
+    headline: 'England vs West Indies: Rain clears in Bridgetown; covers removed for revised 38-over chase',
+    time: '35m ago',
   },
   {
-    id: 'mkt-5',
-    sport: 'FOOTBALL',
-    sportType: 'football',
-    sportIcon: '⚽',
-    title: 'Real Madrid vs Man City',
-    score: '2-1 • 74’',
-    odds1Label: 'RMA',
-    odds1Value: '1.65',
-    odds2Label: 'MCI',
-    odds2Value: '3.80',
+    id: 'news-5',
+    tag: 'ANALYSIS',
+    tagColor: 'gold',
+    headline: 'Middle-Overs Revolution: Why modern T20 analytics completely discarded the anchor role',
+    time: '1h ago',
   },
   {
-    id: 'mkt-6',
-    sport: 'KABADDI',
-    sportType: 'kabaddi',
-    sportIcon: '👥',
-    title: 'Patna Pirates vs Puneri',
-    score: '32-29 • 34m',
-    odds1Label: 'PAT',
-    odds1Value: '1.75',
-    odds2Label: 'PUN',
-    odds2Value: '2.25',
+    id: 'news-6',
+    tag: 'CHAMPIONS TROPHY',
+    tagColor: 'red',
+    headline: 'ICC Executive Summit concludes in Dubai with venue scheduling confirmations',
+    time: '2h ago',
   },
 ];
 
 export default function NewsTicker() {
-  const [selectedBet, setSelectedBet] = useState<string | null>(null);
+  const [selectedNews, setSelectedNews] = useState<BreakingNewsItem | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleOddsClick = (item: MarketItem, team: string, odds: string, e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setSelectedBet(`LIVE BET: ${item.title} - ${team} @ ${odds}`);
+  const handleNewsClick = (item: BreakingNewsItem) => {
+    setSelectedNews(item);
     setIsModalOpen(true);
   };
 
   return (
-    <div className="live-markets-ticker-bar" role="region" aria-label="Live Betting Markets Ticker">
-      <div className="live-markets-inner">
-        {/* Left Fixed Badge: LIVE MARKETS */}
-        <div className="live-markets-label-badge">
-          <span className="live-markets-dot" />
-          <span className="live-markets-text">LIVE MARKETS</span>
+    <div className="breaking-news-ticker-bar" role="region" aria-label="Breaking Sports News">
+      <div className="breaking-news-inner">
+        {/* Left Fixed Badge: BREAKING NEWS */}
+        <div className="breaking-news-badge">
+          <span className="breaking-pulse-dot" />
+          <span className="breaking-badge-text">BREAKING NEWS</span>
         </div>
 
         {/* Marquee Track: Seamless Infinite Scrolling */}
-        <div className="live-markets-scroll-container">
-          <div className="live-markets-track">
-            {/* Render items twice for an uninterrupted infinite loop */}
-            {[...LIVE_MARKETS, ...LIVE_MARKETS].map((mkt, idx) => (
-              <div key={`${mkt.id}-${idx}`} className="live-market-chip">
-                {/* Live Tag */}
-                <span className="market-live-tag">
-                  <span className="market-live-dot" />
-                  LIVE
+        <div className="breaking-news-scroll-container">
+          <div className="breaking-news-track">
+            {/* Duplicated list for seamless, gap-free loop */}
+            {[...BREAKING_NEWS, ...BREAKING_NEWS].map((item, idx) => (
+              <div
+                key={`${item.id}-${idx}`}
+                className="breaking-news-item"
+                onClick={() => handleNewsClick(item)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleNewsClick(item);
+                  }
+                }}
+              >
+                <span className={`news-tag-pill tag-${item.tagColor}`}>
+                  {item.tag}
                 </span>
-
-                {/* Sport Badge */}
-                <span className={`market-sport-badge badge-${mkt.sportType}`}>
-                  <span className="sport-icon">{mkt.sportIcon}</span>
-                  <span>{mkt.sport}</span>
-                </span>
-
-                {/* Match Title */}
-                <span className="market-match-title">
-                  {mkt.title.includes(' vs ') ? (
-                    <>
-                      {mkt.title.split(' vs ')[0]} <span className="market-vs">vs</span> {mkt.title.split(' vs ')[1]}
-                    </>
-                  ) : (
-                    mkt.title
-                  )}
-                </span>
-
-                {/* Score & Timing */}
-                <span className="market-match-score">{mkt.score}</span>
-
-                {/* Blue Odds Button (Team 1) */}
-                <button
-                  className="btn-market-odds odds-blue"
-                  onClick={(e) => handleOddsClick(mkt, mkt.odds1Label, mkt.odds1Value, e)}
-                  title={`Back ${mkt.odds1Label} @ ${mkt.odds1Value}`}
-                >
-                  <span className="odds-team">{mkt.odds1Label}</span>
-                  <span className="odds-val">{mkt.odds1Value}</span>
-                </button>
-
-                {/* Pink Odds Button (Team 2) */}
-                <button
-                  className="btn-market-odds odds-pink"
-                  onClick={(e) => handleOddsClick(mkt, mkt.odds2Label, mkt.odds2Value, e)}
-                  title={`Back ${mkt.odds2Label} @ ${mkt.odds2Value}`}
-                >
-                  <span className="odds-team">{mkt.odds2Label}</span>
-                  <span className="odds-val">{mkt.odds2Value}</span>
-                </button>
+                <span className="news-headline-text">{item.headline}</span>
+                <span className="news-time-badge">{item.time}</span>
+                <span className="news-item-separator">◆</span>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Bet Slip Modal */}
-      {selectedBet && (
+      {/* Reader / VIP Intel Modal */}
+      {selectedNews && (
         <JoinModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          title={selectedBet}
+          title={`BREAKING INTEL: ${selectedNews.headline}`}
           destinationUrl="https://reddybook.club"
         />
       )}

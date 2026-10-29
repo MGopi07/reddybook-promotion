@@ -4,7 +4,6 @@ import LiveScoreSlider from '@/components/LiveScoreSlider';
 import FeaturedStory from '@/components/FeaturedStory';
 import PromotionalBanner from '@/components/PromotionalBanner';
 import LatestNewsSection from '@/components/LatestNewsSection';
-import LatestVideosSection from '@/components/LatestVideosSection';
 import AnalysisBanner from '@/components/AnalysisBanner';
 import { ARTICLES } from '@/lib/content';
 
@@ -31,9 +30,6 @@ export default function HomePage() {
 
       {/* 5. Latest News Section with search & category filters */}
       <LatestNewsSection />
-
-      {/* 5. Latest Videos Section */}
-      <LatestVideosSection />
 
       {/* 6. Analysis Feature Banner */}
       <AnalysisBanner />
