@@ -16,21 +16,21 @@ interface BannerSlide {
 const BANNER_SLIDES: BannerSlide[] = [
   {
     id: 'banner-sportsbook',
-    image: '/images/banner/strip-1.png',
-    alt: 'MY99EXCH Sportsbook - Bet On Your Passion',
-    title: 'MY99EXCH Sportsbook',
+    image: '/images/banner/1.png',
+    alt: 'Reddy Book Sportsbook - Comprehensive Cricket & Sports Hub',
+    title: 'REDDY BOOK SPORTSBOOK',
   },
   {
     id: 'banner-cricket',
-    image: '/images/banner/strip-2.png',
-    alt: 'MY99EXCH Cricket Sportsbook - Bet, Play, Win',
-    title: 'Cricket Sportsbook Action',
+    image: '/images/banner/2.png',
+    alt: 'Reddy Book Cricket - Match Analytics & Fixture Coverage',
+    title: 'REDDY BOOK CRICKET',
   },
   {
     id: 'banner-badminton',
-    image: '/images/banner/strip-3.png',
-    alt: 'MY99EXCH Badminton Sportsbook - Play Badminton Win Big',
-    title: 'Badminton Championship Sportsbook',
+    image: '/images/banner/3.png',
+    alt: 'Reddy Book Sports - Live Sports Updates & Editorial Analysis',
+    title: 'REDDY BOOK SPORTS',
   },
 ];
 
@@ -38,7 +38,7 @@ export default function TopPromoBanner() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedTitle, setSelectedTitle] = useState('SPORTSBOOK PROMOTION');
+  const [selectedTitle, setSelectedTitle] = useState('REDDY BOOK SPORTSBOOK');
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const total = BANNER_SLIDES.length;

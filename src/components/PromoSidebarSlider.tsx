@@ -123,7 +123,7 @@ export default function PromoSidebarSlider() {
             className="promo-ad-card has-bg-image"
             style={{
               backgroundImage: card.bgImage
-                ? `linear-gradient(105deg, rgba(8, 12, 20, 0.55) 0%, rgba(8, 12, 20, 0.30) 48%, rgba(8, 12, 20, 0.05) 100%), url(${card.bgImage})`
+                ? `linear-gradient(105deg, rgba(10, 16, 28, 0.72) 0%, rgba(10, 16, 28, 0.28) 54%, rgba(10, 16, 28, 0.04) 100%), url(${card.bgImage})`
                 : card.bgGradient,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
@@ -164,11 +164,7 @@ export default function PromoSidebarSlider() {
                 style={{ background: card.accentGradient }}
                 onClick={(e) => handleAction(card, e)}
               >
-                {card.ctaText === 'PLAY NOW' ? (
-                  <Play size={13} fill="#070A0F" stroke="#070A0F" />
-                ) : (
-                  <ArrowUpRight size={15} strokeWidth={2.5} />
-                )}
+                <ArrowUpRight size={15} strokeWidth={2.5} />
                 <span>{card.ctaText}</span>
               </button>
             </div>

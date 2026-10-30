@@ -10,6 +10,7 @@ export interface TeamScore {
 export interface MatchScore {
   id: string;
   series: string;
+  leagueLogo?: string;
   format: string; // 'T20I' | 'IPL' | 'ODI' | 'TEST'
   matchNumber: string;
   venue: string;

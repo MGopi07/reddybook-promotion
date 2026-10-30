@@ -131,7 +131,7 @@ export default function Footer() {
           <div className="footer-join-col">
             <h4 className="footer-heading">REDDY BOOK VIP Club</h4>
             <p className="footer-join-desc">
-              Join India&apos;s leading sports intelligence &amp; gaming platform. Get your instant VIP ID with 24/7 dedicated support.
+              Join India&apos;s leading sports intelligence &amp; tournament analytics portal. Join the Reddybook Sports Community for 24/7 match analysis &amp; dedicated member support.
             </p>
             <button
               className="footer-join-now-btn"
@@ -146,7 +146,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className="footer-wa-quick-link"
-              title="Instant WhatsApp Support"
+              title="Official WhatsApp Support"
             >
               <span className="footer-wa-dot" />
               <span>WhatsApp: +44 7868 175325</span>

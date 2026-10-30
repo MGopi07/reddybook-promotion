@@ -1,0 +1,297 @@
+/* ==========================================================================
+   LIVE CRICKET WEATHER PILL WIDGET STYLES
+   Sleek Blue Gradient Card matching Championship Portal Aesthetic
+   ========================================================================== */
+
+.weather-widget-wrapper {
+  position: relative;
+  display: inline-block;
+  user-select: none;
+  z-index: 50;
+}
+
+.weather-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #09478F 0%, #0284C7 100%);
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  border-radius: 12px;
+  padding: 5px 12px 5px 8px;
+  box-shadow: 
+    0 4px 18px rgba(2, 132, 199, 0.30),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+}
+
+.weather-pill:hover {
+  transform: translateY(-1px);
+  border-color: rgba(56, 189, 248, 0.75);
+  box-shadow: 
+    0 6px 22px rgba(2, 132, 199, 0.45),
+    0 0 15px rgba(56, 189, 248, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.weather-pill:active {
+  transform: translateY(0);
+}
+
+.weather-icon-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 
+    0 2px 6px rgba(0, 0, 0, 0.25),
+    0 0 10px rgba(253, 224, 71, 0.3);
+  transition: transform 0.2s ease;
+}
+
+.weather-pill:hover .weather-icon-circle {
+  transform: scale(1.08) rotate(6deg);
+}
+
+.weather-sun-icon {
+  color: #FDE047;
+  filter: drop-shadow(0 0 4px #FACC15);
+  animation: sunGlowPulse 3s ease-in-out infinite;
+}
+
+@keyframes sunGlowPulse {
+  0%, 100% { filter: drop-shadow(0 0 3px #FACC15); transform: scale(1); }
+  50% { filter: drop-shadow(0 0 8px #FDE047); transform: scale(1.06); }
+}
+
+.weather-cloud-icon {
+  color: #E0F2FE;
+  filter: drop-shadow(0 0 4px #7DD3FC);
+}
+
+.weather-rain-icon {
+  color: #93C5FD;
+  filter: drop-shadow(0 0 4px #60A5FA);
+}
+
+.weather-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.15;
+  text-align: left;
+}
+
+.weather-city-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.weather-city-name {
+  font-family: var(--font-heading);
+  font-size: 0.90rem;
+  font-weight: 850;
+  letter-spacing: 0.05em;
+  color: #FFFFFF;
+  text-transform: uppercase;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.weather-location-icon {
+  color: #BAE6FD;
+  opacity: 0.9;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.weather-pill:hover .weather-location-icon {
+  opacity: 1;
+  transform: scale(1.15);
+  color: #FFFFFF;
+}
+
+.weather-details-row {
+  font-size: 0.74rem;
+  color: #E0F2FE;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.weather-dot-divider {
+  opacity: 0.7;
+}
+
+/* Dropdown Menu for Stadium / City Selection */
+.weather-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 280px;
+  background: linear-gradient(180deg, #0E1626 0%, #080D18 100%);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 
+    0 14px 40px rgba(0, 0, 0, 0.75),
+    0 0 25px rgba(2, 132, 199, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  z-index: 999;
+  animation: weatherDropIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes weatherDropIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.weather-dropdown-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.weather-dropdown-title {
+  font-family: var(--font-heading);
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #7DD3FC;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.btn-detect-location {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  color: #E0F2FE;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-detect-location:hover {
+  background: rgba(56, 189, 248, 0.3);
+  color: #FFFFFF;
+}
+
+.weather-cities-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 220px;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.weather-cities-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.weather-cities-list::-webkit-scrollbar-thumb {
+  background: rgba(56, 189, 248, 0.3);
+  border-radius: 4px;
+}
+
+.weather-city-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 10px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid transparent;
+  color: #F1F5F9;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  text-align: left;
+  width: 100%;
+}
+
+.weather-city-option:hover {
+  background: rgba(2, 132, 199, 0.22);
+  border-color: rgba(56, 189, 248, 0.4);
+  color: #FFFFFF;
+}
+
+.weather-city-option.active {
+  background: linear-gradient(135deg, rgba(9, 71, 143, 0.6), rgba(2, 132, 199, 0.5));
+  border-color: #38BDF8;
+}
+
+.weather-option-name {
+  font-weight: 800;
+  font-size: 0.80rem;
+}
+
+.weather-option-stadium {
+  font-size: 0.65rem;
+  color: #94A3B8;
+  margin-top: 1px;
+}
+
+.weather-option-badge {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #FDE047;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .site-header .weather-widget-wrapper {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .weather-pill {
+    padding: 4px 10px 4px 7px;
+    gap: 8px;
+  }
+
+  .weather-icon-circle {
+    width: 28px;
+    height: 28px;
+  }
+
+  .weather-city-name {
+    font-size: 0.82rem;
+  }
+
+  .weather-details-row {
+    font-size: 0.68rem;
+  }
+
+  .weather-dropdown {
+    right: auto;
+    left: 0;
+    width: 260px;
+  }
+}

@@ -22,7 +22,10 @@ export default function NewsCard({ article }: NewsCardProps) {
             loading="lazy"
           />
         </Link>
-        <span className="badge news-card-badge">{article.category}</span>
+        <span className="badge news-card-badge" data-category={article.category}>
+          <span className="news-badge-dot" />
+          <span>{article.category}</span>
+        </span>
       </div>
 
       <div className="news-card-body">

@@ -3,7 +3,6 @@ import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
-import ThemeSwitcher from '@/components/ThemeSwitcher';
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -27,6 +26,9 @@ export const metadata: Metadata = {
     'IPL',
     'Cricket Videos',
   ],
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
     title: 'REDDY BOOK | Cricket Intelligence & Tactical Analysis',
     description:
@@ -40,9 +42,36 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const websiteSchema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        '@id': 'https://reddybook.club/#website',
+        url: 'https://reddybook.club',
+        name: 'REDDY BOOK',
+        description: 'Cricket Intelligence, Match News & Video Highlights',
+        publisher: {
+          '@id': 'https://reddybook.club/#organization',
+        },
+      },
+      {
+        '@type': 'SportsOrganization',
+        '@id': 'https://reddybook.club/#organization',
+        name: 'REDDY BOOK',
+        url: 'https://reddybook.club',
+        logo: 'https://reddybook.club/images/reddybook-logo.png',
+      },
+    ],
+  };
+
   return (
     <html lang="en">
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -85,7 +114,6 @@ export default function RootLayout({
         <main>{children}</main>
         <Footer />
         <WhatsAppButton />
-        <ThemeSwitcher />
       </body>
     </html>
   );

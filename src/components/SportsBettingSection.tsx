@@ -38,12 +38,12 @@ const SPORTS_DATA: Record<SportKey, SportContent> = {
     iconType: 'trophy',
     heading: 'CRICKET BETTING ON REDDYBOOK',
     intro:
-      'Reddybook offers one of most exciting cricket betting experiences for sports enthusiasts. Cricket remains the most popular category on Reddybook due to its massive fan following and year-round tournaments. Users on Reddybook can place bets major events including the IPL, ICC tournaments, Asia Cup, and international T20 leagues.',
-    calloutTitle: 'BETTING MARKETS & LIVE COVERAGE',
+      'Reddybook provides comprehensive cricket sports telemetry and analytical match previews for sports enthusiasts. Cricket is deeply followed due to year-round tournament schedules. Followers can evaluate major events including the IPL, ICC tournaments, Asia Cup, and international T20 leagues.',
+    calloutTitle: 'ANALYTICAL MARKETS & LIVE METRICS',
     calloutDesc:
-      'With Reddybook, bettors explore multiple markets such match winner predictions, session runs, total boundaries, top batsman, top bowler, and live betting opportunities. The live betting feature on Reddybook becomes especially engaging during powerplays and death overs where odds change rapidly.',
+      'Explore multiple analysis dimensions such as match outcome probabilities, projected session runs, total boundaries, top batter strike rates, and dynamic powerplay shifts.',
     bottomNote:
-      'Many users prefer Reddybook for cricket betting because Reddybook provides real-time updates, competitive odds, and a seamless betting experience. By following team form, pitch reports, and player statistics, users of Reddybook can make informed betting decisions.',
+      'Sports analysts leverage real-time telemetry, competitive projections, and structured match reports. By studying team form, pitch conditions, and player statistics, fans can make well-informed observations.',
     liveMatch: {
       tournament: 'ICC T20 World Cup — Live Match',
       title: 'INDIA VS AUSTRALIA',
@@ -303,14 +303,14 @@ export default function SportsBettingSection() {
               </div>
             </div>
 
-            {/* Register & Place Live Bet CTA */}
+            {/* Register & Explore CTA */}
             <button
               className="btn-register-place-bet"
               onClick={handleRegisterClick}
-              aria-label="Register and place live bet on Reddybook"
+              aria-label="Explore sports telemetry on Reddybook"
             >
               <Ticket size={16} />
-              <span>REGISTER &amp; PLACE LIVE BET</span>
+              <span>EXPLORE SPORTS TELEMETRY</span>
             </button>
           </div>
         </div>

@@ -16,6 +16,7 @@ export default function LiveScoreSlider() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
+  const [matches, setMatches] = useState<MatchScore[]>(SAMPLE_MATCHES);
   const [cardsPerView, setCardsPerView] = useState(3);
 
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -38,15 +39,42 @@ export default function LiveScoreSlider() {
     return () => window.removeEventListener('resize', updateCardsPerView);
   }, []);
 
+  // Fetch live scores from Sportmonks proxy API route and poll periodically
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadLiveScores = async () => {
+      try {
+        const res = await fetch('/api/cricket/livescores');
+        if (res.ok) {
+          const json = await res.json();
+          if (isMounted && Array.isArray(json.data) && json.data.length > 0) {
+            setMatches(json.data);
+          }
+        }
+      } catch (e) {
+        console.warn('Live score refresh failed, maintaining cached matches');
+      }
+    };
+
+    loadLiveScores();
+    const interval = setInterval(loadLiveScores, 25000);
+
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
+  }, []);
+
   // Filtered matches
-  const filteredMatches = SAMPLE_MATCHES.filter((m) => {
+  const filteredMatches = matches.filter((m) => {
     if (filter === 'ALL') return true;
     return m.status === filter;
   });
 
-  const liveCount = SAMPLE_MATCHES.filter((m) => m.status === 'LIVE').length;
-  const upcomingCount = SAMPLE_MATCHES.filter((m) => m.status === 'UPCOMING').length;
-  const resultCount = SAMPLE_MATCHES.filter((m) => m.status === 'RESULT').length;
+  const liveCount = matches.filter((m) => m.status === 'LIVE').length;
+  const upcomingCount = matches.filter((m) => m.status === 'UPCOMING').length;
+  const resultCount = matches.filter((m) => m.status === 'RESULT').length;
 
   const maxScrollIndex = Math.max(0, filteredMatches.length - cardsPerView);
   const totalDots = filteredMatches.length > cardsPerView ? maxScrollIndex + 1 : 0;
@@ -59,7 +87,7 @@ export default function LiveScoreSlider() {
 
     const firstCard = children[0] as HTMLElement;
     const cardWidth = firstCard.offsetWidth + 14;
-    const index = Math.round(scrollLeft / cardWidth);
+    const index = Math.round(Math.max(0, scrollLeft) / cardWidth);
     setActiveIndex(Math.min(Math.max(0, index), maxScrollIndex));
   }, [maxScrollIndex]);
 
@@ -88,7 +116,8 @@ export default function LiveScoreSlider() {
         const nextIdx = prev >= maxScrollIndex ? 0 : prev + 1;
         const target = children[nextIdx] as HTMLElement;
         if (target && sliderRef.current) {
-          sliderRef.current.scrollTo({ left: target.offsetLeft, behavior: 'smooth' });
+          const padLeft = parseFloat(getComputedStyle(sliderRef.current).paddingLeft) || 0;
+          sliderRef.current.scrollTo({ left: Math.max(0, target.offsetLeft - padLeft), behavior: 'smooth' });
         }
         return nextIdx;
       });
@@ -107,8 +136,9 @@ export default function LiveScoreSlider() {
     if (targetIdx < 0) targetIdx = maxScrollIndex;
 
     const target = children[targetIdx] as HTMLElement;
-    if (target) {
-      sliderRef.current.scrollTo({ left: target.offsetLeft, behavior: 'smooth' });
+    if (target && sliderRef.current) {
+      const padLeft = parseFloat(getComputedStyle(sliderRef.current).paddingLeft) || 0;
+      sliderRef.current.scrollTo({ left: Math.max(0, target.offsetLeft - padLeft), behavior: 'smooth' });
       setActiveIndex(targetIdx);
     }
 
@@ -124,9 +154,10 @@ export default function LiveScoreSlider() {
     if (!sliderRef.current) return;
     const clampedIndex = Math.min(Math.max(0, index), maxScrollIndex);
     const children = sliderRef.current.children;
-    if (children[clampedIndex]) {
+    if (children[clampedIndex] && sliderRef.current) {
       const target = children[clampedIndex] as HTMLElement;
-      sliderRef.current.scrollTo({ left: target.offsetLeft, behavior: 'smooth' });
+      const padLeft = parseFloat(getComputedStyle(sliderRef.current).paddingLeft) || 0;
+      sliderRef.current.scrollTo({ left: Math.max(0, target.offsetLeft - padLeft), behavior: 'smooth' });
       setActiveIndex(clampedIndex);
     }
 
@@ -194,7 +225,7 @@ export default function LiveScoreSlider() {
                   if (sliderRef.current) sliderRef.current.scrollTo({ left: 0, behavior: 'smooth' });
                 }}
               >
-                All Matches ({SAMPLE_MATCHES.length})
+                All Matches ({matches.length})
               </button>
               <button
                 className={`match-filter-btn ${filter === 'LIVE' ? 'active' : ''}`}
@@ -316,8 +347,16 @@ export default function LiveScoreSlider() {
                   {/* Two-Row Card Header: Clean & Never Clipped */}
                   <div className="match-card-header">
                     <div className="match-card-top-row">
-                      <span className="match-card-series-name" title={match.series}>
-                        {match.series}
+                      <span className="match-card-series-name" title={match.series} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                        {match.leagueLogo && (
+                          <img
+                            src={match.leagueLogo}
+                            alt=""
+                            style={{ width: 14, height: 14, objectFit: 'contain', flexShrink: 0 }}
+                            onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+                          />
+                        )}
+                        <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{match.series}</span>
                       </span>
                       <span
                         className={`match-status-badge badge-${match.status.toLowerCase()}`}
@@ -347,6 +386,7 @@ export default function LiveScoreSlider() {
                         <TeamFlag
                           shortName={match.team1.shortName}
                           name={match.team1.name}
+                          flagUrl={match.team1.flagUrl}
                           size={24}
                           className="match-team-flag"
                         />
@@ -366,6 +406,7 @@ export default function LiveScoreSlider() {
                         <TeamFlag
                           shortName={match.team2.shortName}
                           name={match.team2.name}
+                          flagUrl={match.team2.flagUrl}
                           size={24}
                           className="match-team-flag"
                         />

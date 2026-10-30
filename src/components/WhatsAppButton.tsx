@@ -22,7 +22,7 @@ export default function WhatsAppButton({
         rel="noopener noreferrer"
         className="whatsapp-float-btn"
         aria-label="Chat on WhatsApp with REDDY BOOK support"
-        title="Chat on WhatsApp (Instant ID)"
+        title="Contact Official Support on WhatsApp"
       >
         {/* Pulsing Ripple Wave */}
         <span className="whatsapp-pulse-wave" />

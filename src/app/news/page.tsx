@@ -7,7 +7,7 @@ import PromotionalBanner from '@/components/PromotionalBanner';
 import NewsCatalogClient from './NewsCatalogClient';
 
 export const metadata: Metadata = {
-  title: 'Cricket News & Match Analysis | REDHOT SPORTS',
+  title: 'Cricket News & In-Depth Match Analysis | REDDY BOOK',
   description:
     'Comprehensive cricket news, match reviews, tactical breakdowns, and T20 analysis from leading sports journalists.',
 };

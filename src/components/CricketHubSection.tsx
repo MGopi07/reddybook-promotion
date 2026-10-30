@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import {
   Gamepad2,
@@ -22,6 +22,7 @@ import {
 import TeamFlag from './TeamFlag';
 import EditorialImage from './EditorialImage';
 import JoinModal from './JoinModal';
+import { SAMPLE_MATCHES, MatchScore } from '@/lib/matches';
 import '@/styles/crickethub.css';
 
 interface GameItem {
@@ -57,7 +58,7 @@ const FEATURED_GAMES: GameItem[] = [
   {
     id: 'super-over',
     name: 'SUPER OVER',
-    subtitle: 'One Over Big Win',
+    subtitle: 'Super Over Challenge',
     badge: 'HOT',
     image: '/images/game_super_over.jpg',
   },
@@ -66,14 +67,14 @@ const FEATURED_GAMES: GameItem[] = [
     name: 'PREMIER SIX',
     subtitle: 'T20 Boundary Rush',
     badge: 'HOT',
-    image: '/images/promo_cricket_action.jpg',
+    image: '/images/game_premier_six.jpg',
   },
   {
     id: 'lucky-spin',
     name: 'LUCKY SPINS',
-    subtitle: 'Instant Cash Drops',
+    subtitle: 'Dynamic Spin Arena',
     badge: 'NEW',
-    image: '/images/promo_bonus_coins.jpg',
+    image: '/images/game_lucky_spins.jpg',
   },
 ];
 
@@ -145,6 +146,40 @@ export default function CricketHubSection() {
     title: 'PLAY ON REDDY BOOK CLUB',
   });
 
+  const [liveMatch, setLiveMatch] = useState<MatchScore>(SAMPLE_MATCHES[0]);
+  const [upcomingMatches, setUpcomingMatches] = useState<MatchScore[]>(
+    SAMPLE_MATCHES.filter((m) => m.status === 'UPCOMING').slice(0, 3)
+  );
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchScores = async () => {
+      try {
+        const res = await fetch('/api/cricket/livescores');
+        if (res.ok) {
+          const json = await res.json();
+          if (isMounted && Array.isArray(json.data) && json.data.length > 0) {
+            const live = json.data.find((m: MatchScore) => m.status === 'LIVE') || json.data[0];
+            setLiveMatch(live);
+            const upcoming = json.data.filter((m: MatchScore) => m.status === 'UPCOMING');
+            if (upcoming.length > 0) {
+              setUpcomingMatches(upcoming.slice(0, 3));
+            }
+          }
+        }
+      } catch {
+        // maintain cached fallback
+      }
+    };
+
+    fetchScores();
+    const interval = setInterval(fetchScores, 25000);
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
+  }, []);
+
   const handleOpenClubModal = (title: string) => {
     setModalState({
       isOpen: true,
@@ -181,41 +216,43 @@ export default function CricketHubSection() {
               <div className="portal-card-header">
                 <h4 className="portal-card-title">
                   <span className="badge-live-pulse-dot" />
-                  Live Match
+                  {liveMatch.status === 'LIVE' ? 'Live Match' : 'Featured Match'}
                 </h4>
                 <span className="badge-live" style={{ fontSize: '0.68rem', padding: '2px 6px' }}>
-                  + LIVE
+                  {liveMatch.status === 'LIVE' ? '🔴 LIVE' : liveMatch.status}
                 </span>
               </div>
-              <span className="portal-match-series-tag">ICC T20 WORLD CUP 2024</span>
+              <span className="portal-match-series-tag" title={liveMatch.series}>
+                {liveMatch.series}
+              </span>
 
               <div className="portal-score-row">
                 <div className="portal-team-info">
-                  <TeamFlag shortName="IND" size={20} />
-                  <span className="portal-team-code">IND</span>
+                  <TeamFlag shortName={liveMatch.team1.shortName} flagUrl={liveMatch.team1.flagUrl} size={20} />
+                  <span className="portal-team-code">{liveMatch.team1.shortName}</span>
                 </div>
                 <div className="portal-team-score-num">
-                  178/4 <span className="portal-overs-txt">(18.2 ov)</span>
+                  {liveMatch.team1.score || 'TBD'} {liveMatch.team1.overs && <span className="portal-overs-txt">({liveMatch.team1.overs})</span>}
                 </div>
               </div>
 
               <div className="portal-score-row">
                 <div className="portal-team-info">
-                  <TeamFlag shortName="AUS" size={20} />
-                  <span className="portal-team-code">AUS</span>
+                  <TeamFlag shortName={liveMatch.team2.shortName} flagUrl={liveMatch.team2.flagUrl} size={20} />
+                  <span className="portal-team-code">{liveMatch.team2.shortName}</span>
                 </div>
                 <div className="portal-team-score-num">
-                  176/6 <span className="portal-overs-txt">(20 ov)</span>
+                  {liveMatch.team2.score || 'Yet to bat'} {liveMatch.team2.overs && <span className="portal-overs-txt">({liveMatch.team2.overs})</span>}
                 </div>
               </div>
 
               <div className="portal-match-equation">
-                India need 3 runs from 10 balls
+                {liveMatch.statusText || liveMatch.requiredEquation || 'Live match commentary in progress'}
               </div>
 
               <button
                 type="button"
-                onClick={() => handleOpenClubModal('LIVE MATCH CENTER - IND VS AUS')}
+                onClick={() => handleOpenClubModal(`LIVE MATCH CENTER - ${liveMatch.team1.shortName} VS ${liveMatch.team2.shortName}`)}
                 className="portal-view-score-btn"
               >
                 View Full Score <ArrowRight size={13} />
@@ -235,46 +272,28 @@ export default function CricketHubSection() {
               </div>
 
               <div className="upcoming-matches-list">
-                {/* Match 1 */}
-                <div className="upcoming-match-item">
-                  <div className="upcoming-flags-pair">
-                    <TeamFlag shortName="IND" size={20} />
-                    <TeamFlag shortName="AUS" size={20} />
+                {upcomingMatches.map((m) => (
+                  <div
+                    key={m.id}
+                    className="upcoming-match-item"
+                    onClick={() => handleOpenClubModal(`MATCH PREVIEW - ${m.team1.shortName} VS ${m.team2.shortName}`)}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <div className="upcoming-flags-pair">
+                      <TeamFlag shortName={m.team1.shortName} size={20} />
+                      <TeamFlag shortName={m.team2.shortName} size={20} />
+                    </div>
+                    <div className="upcoming-info">
+                      <span className="upcoming-teams-label">{m.team1.shortName} vs {m.team2.shortName}</span>
+                      <span className="upcoming-time-txt">{m.matchNumber} • {m.statusText}</span>
+                    </div>
                   </div>
-                  <div className="upcoming-info">
-                    <span className="upcoming-teams-label">IND vs AUS</span>
-                    <span className="upcoming-time-txt">2nd ODI • 12 Nov, 1:30 PM</span>
-                  </div>
-                </div>
-
-                {/* Match 2 */}
-                <div className="upcoming-match-item">
-                  <div className="upcoming-flags-pair">
-                    <TeamFlag shortName="ENG" size={20} />
-                    <TeamFlag shortName="SA" size={20} />
-                  </div>
-                  <div className="upcoming-info">
-                    <span className="upcoming-teams-label">ENG vs SA</span>
-                    <span className="upcoming-time-txt">3rd T20I • 14 Nov, 7:00 PM</span>
-                  </div>
-                </div>
-
-                {/* Match 3 */}
-                <div className="upcoming-match-item">
-                  <div className="upcoming-flags-pair">
-                    <TeamFlag shortName="PAK" size={20} />
-                    <TeamFlag shortName="NZ" size={20} />
-                  </div>
-                  <div className="upcoming-info">
-                    <span className="upcoming-teams-label">PAK vs NZ</span>
-                    <span className="upcoming-time-txt">1st T20I • 16 Nov, 7:00 PM</span>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
 
             {/* 4. T20 World Cup Promo Banner */}
-            <div className="portal-t20-promo">
+            {/* <div className="portal-t20-promo">
               <Trophy size={28} color="#FDE047" />
               <h4 className="t20-promo-title">T20 World Cup 2024</h4>
               <p className="t20-promo-sub">Big Matches. Bigger Moments.</p>
@@ -285,7 +304,7 @@ export default function CricketHubSection() {
               >
                 View Schedule <ArrowRight size={12} />
               </button>
-            </div>
+            </div> */}
 
             {/* 5. Latest Videos */}
             <div className="portal-card">
@@ -500,15 +519,15 @@ export default function CricketHubSection() {
                       <div className="hub-game-info">
                         <div className="hub-game-meta">
                           <h5 className="hub-game-name">{game.name}</h5>
-                          <span className="hub-game-sub">{game.subtitle}</span>
+                          {/* <span className="hub-game-sub">{game.subtitle}</span> */}
                         </div>
 
                         <button
                           type="button"
-                          onClick={() => handleOpenClubModal(`PLAY ${game.name}`)}
+                          onClick={() => handleOpenClubModal(`EXPLORE ${game.name}`)}
                           className="hub-play-now-btn"
                         >
-                          Play Now <ArrowRight size={13} />
+                          Know More <ArrowRight size={13} />
                         </button>
                       </div>
                     </div>
@@ -518,7 +537,7 @@ export default function CricketHubSection() {
             </div>
 
             {/* More News Section */}
-            <div className="hub-block">
+            {/* <div className="hub-block">
               <div className="hub-block-header">
                 <h3 className="hub-block-title">
                   <Newspaper size={18} />
@@ -547,7 +566,7 @@ export default function CricketHubSection() {
                   </Link>
                 ))}
               </div>
-            </div>
+            </div> */}
           </main>
 
 
@@ -665,7 +684,7 @@ export default function CricketHubSection() {
             </div>
 
             {/* 3. Popular Games Banner */}
-            <div className="portal-card">
+            {/* <div className="portal-card">
               <div className="portal-card-header">
                 <h4 className="portal-card-title">
                   <Gamepad2 size={15} />
@@ -692,14 +711,14 @@ export default function CricketHubSection() {
                   <span className="popular-game-txt">Play Real Cricket Action</span>
                   <button
                     type="button"
-                    onClick={() => handleOpenClubModal('PLAY CRICKET CLASH')}
+                    onClick={() => handleOpenClubModal('EXPLORE CRICKET CLASH')}
                     className="popular-game-btn"
                   >
-                    Play Now <ArrowRight size={12} />
+                    Know More <ArrowRight size={12} />
                   </button>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             {/* 4. Follow Us Social Links */}
             <div className="portal-card">

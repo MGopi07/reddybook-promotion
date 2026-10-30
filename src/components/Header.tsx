@@ -86,15 +86,9 @@ export default function Header() {
           {/* Header Actions */}
           <div className="header-actions">
             <button
-              className="login-link"
-              onClick={() => setIsJoinModalOpen(true)}
-            >
-              Explore
-            </button>
-            <button
               className="btn-join"
               onClick={() => setIsJoinModalOpen(true)}
-              aria-label="Join Redhot Sports"
+              aria-label="Join Reddy Book Club"
             >
               <span>Join Now</span>
               <ArrowUpRight size={16} />
@@ -180,7 +174,7 @@ export default function Header() {
               <span>Verified Cricket Portal</span>
             </div>
             <p className="offcanvas-vip-text">
-              Instant cricket ID refilling, fast withdrawals & 24/7 dedicated assistance.
+              Official portal for cricket tournament intelligence, live telemetry & 24/7 member support.
             </p>
           </div>
         </div>

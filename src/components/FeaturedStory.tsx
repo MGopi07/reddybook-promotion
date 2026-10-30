@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Clock, Flame, ChevronLeft, ChevronRight, Play } from 'lucide-react';
+import { ArrowRight, Clock, Flame, ChevronLeft, ChevronRight, ArrowUpRight } from 'lucide-react';
 import { Article } from '@/lib/content';
 import EditorialImage from './EditorialImage';
 import JoinModal from './JoinModal';
@@ -109,11 +109,11 @@ export default function FeaturedStory({
           {/* Main Card Content */}
           <div className="featured-content">
             <div className="featured-meta">
-              <span className="badge">
-                <Flame size={12} />
+              <span className="badge hero-badge-featured">
+                <Flame size={13} className="hero-badge-fire" />
                 Featured Story
               </span>
-              <span className="badge neutral">{currentArticle.category}</span>
+              <span className="badge hero-badge-category">{currentArticle.category}</span>
               <span className="story-index-indicator">
                 {`STORY 0${currentIndex + 1} // 0${slides.length}`}
               </span>
@@ -131,17 +131,17 @@ export default function FeaturedStory({
 
             <p className="featured-excerpt">{currentArticle.excerpt}</p>
 
-            {/* CTA Group with PLAY NOW Button */}
+            {/* CTA Group with KNOW MORE Button */}
             <div className="hero-cta-group">
               <button
                 className="btn-hero-play-now"
                 onClick={() => setIsModalOpen(true)}
-                aria-label="Play on Reddy Book Club"
+                aria-label="Know more about Reddy Book Club"
               >
                 <span className="play-icon-circle">
-                  <Play size={14} fill="#070A0F" stroke="#070A0F" />
+                  <ArrowUpRight size={13} color="var(--accent-gold)" strokeWidth={2.5} />
                 </span>
-                <span>PLAY NOW</span>
+                <span>KNOW MORE</span>
               </button>
 
               <Link href={`/news/${currentArticle.slug}`} className="featured-cta">

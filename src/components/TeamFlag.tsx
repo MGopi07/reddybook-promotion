@@ -3,12 +3,37 @@ import React from 'react';
 interface TeamFlagProps {
   shortName: string;
   name?: string;
+  flagUrl?: string;
   size?: number;
   className?: string;
 }
 
-export default function TeamFlag({ shortName, name = '', size = 22, className = '' }: TeamFlagProps) {
+export default function TeamFlag({ shortName, name = '', flagUrl, size = 22, className = '' }: TeamFlagProps) {
   const code = (shortName || name || '').toUpperCase().trim();
+
+  // If official CDN image URL is available, render image directly
+  if (flagUrl) {
+    return (
+      <img
+        src={flagUrl}
+        alt={`${name || shortName} logo`}
+        width={size}
+        height={size}
+        className={`team-flag-img ${className}`}
+        style={{
+          width: size,
+          height: size,
+          borderRadius: '50%',
+          objectFit: 'contain',
+          backgroundColor: '#0F1622',
+          flexShrink: 0,
+        }}
+        onError={(e) => {
+          (e.currentTarget as HTMLImageElement).style.display = 'none';
+        }}
+      />
+    );
+  }
 
   // India
   if (code === 'IND' || code === 'INDIA') {

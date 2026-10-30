@@ -9,7 +9,7 @@ import PromotionalBanner from '@/components/PromotionalBanner';
 import '@/styles/videos.css';
 
 export const metadata: Metadata = {
-  title: 'Cricket Videos, Masterclasses & Highlights | REDHOT SPORTS',
+  title: 'Cricket Videos, Masterclasses & Highlights | REDDY BOOK',
   description:
     'Watch cricket tactical analysis videos, training ground footage, bowling masterclasses, and classic match finishes.',
 };

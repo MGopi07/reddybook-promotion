@@ -26,12 +26,15 @@ export function generateMetadata({ params }: ArticlePageProps): Metadata {
   const article = ARTICLES.find((a) => a.slug === params.slug);
   if (!article) {
     return {
-      title: 'Article Not Found | REDHOT SPORTS',
+      title: 'Article Not Found | REDDY BOOK',
     };
   }
   return {
-    title: `${article.title} | REDHOT SPORTS`,
+    title: `${article.title} | REDDY BOOK`,
     description: article.excerpt,
+    alternates: {
+      canonical: `/news/${article.slug}`,
+    },
     openGraph: {
       title: article.title,
       description: article.excerpt,
@@ -51,8 +54,42 @@ export default function ArticlePage({ params }: ArticlePageProps) {
   const sidebarStories = ARTICLES.filter((a) => a.id !== article.id).slice(0, 4);
   const bottomRelated = ARTICLES.filter((a) => a.id !== article.id).slice(0, 3);
 
+  // NewsArticle JSON-LD Structured Data for Google Rich Results
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'NewsArticle',
+    headline: article.title,
+    description: article.excerpt,
+    image: [article.image],
+    datePublished: '2026-10-30T00:00:00+05:30',
+    dateModified: '2026-10-30T00:00:00+05:30',
+    author: [
+      {
+        '@type': 'Organization',
+        name: 'Reddybook Sports Editorial Team',
+        url: 'https://reddybook.club',
+      },
+    ],
+    publisher: {
+      '@type': 'Organization',
+      name: 'REDDY BOOK',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://reddybook.club/images/reddybook-logo.png',
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://reddybook.club/news/${article.slug}`,
+    },
+  };
+
   return (
     <article className="article-page">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="container">
         {/* Breadcrumb Navigation */}
         <nav className="breadcrumbs" aria-label="Breadcrumbs">
