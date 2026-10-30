@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import '@/styles/whatsapp.css';
 
 interface WhatsAppButtonProps {
@@ -10,33 +10,11 @@ interface WhatsAppButtonProps {
 
 export default function WhatsAppButton({
   url = 'https://api.whatsapp.com/send/?phone=447868175325&text=Hi+Reddy+Book%21+I+need+help.&type=phone_number&app_absent=0',
-  label = 'Instant ID & 24/7 Support',
 }: WhatsAppButtonProps) {
-  const [isDismissed, setIsDismissed] = useState(false);
-
   const whatsappUrl = url;
 
   return (
     <div className="whatsapp-float-container" aria-label="WhatsApp VIP Support">
-      {/* Interactive Prompt Bubble (Desktop) */}
-      {!isDismissed && (
-        <a
-          href={whatsappUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="whatsapp-prompt-bubble"
-          title="Chat with us on WhatsApp"
-        >
-          <div className="whatsapp-prompt-text">
-            <span className="whatsapp-prompt-title">{label}</span>
-            <span className="whatsapp-prompt-subtitle">
-              <span className="whatsapp-status-indicator" />
-              Online 24/7 • Replies in 1m
-            </span>
-          </div>
-        </a>
-      )}
-
       {/* Floating Circular Action Button */}
       <a
         href={whatsappUrl}

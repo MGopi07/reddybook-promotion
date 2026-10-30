@@ -4,7 +4,7 @@
    ========================================================================== */
 
 .breaking-news-ticker-bar {
-  background: linear-gradient(180deg, #070A0F 0%, #0A0E17 100%);
+  background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-card) 100%);
   border-top: 1px solid rgba(229, 184, 66, 0.2);
   border-bottom: 1px solid rgba(255, 255, 255, 0.07);
   height: 42px;

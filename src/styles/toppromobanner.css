@@ -1,0 +1,207 @@
+/* ==========================================================================
+   TOP PROMOTIONAL STRIP BANNER (Above Match Center)
+   Rotating high-impact 1200x200 promo banners
+   ========================================================================== */
+
+.top-promo-banner-section {
+  padding: 14px 0 6px;
+  position: relative;
+  z-index: 15;
+  background-color: var(--bg-primary);
+}
+
+.top-promo-banner-wrapper {
+  position: relative;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #080D15;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 16px rgba(229, 184, 66, 0.08);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.top-promo-banner-wrapper:hover {
+  border-color: rgba(229, 184, 66, 0.4);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6), 0 0 22px rgba(229, 184, 66, 0.18);
+}
+
+/* Slides track */
+.top-promo-slides-track {
+  display: flex;
+  width: 100%;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.top-promo-slide-item {
+  min-width: 100%;
+  width: 100%;
+  position: relative;
+  display: block;
+  cursor: pointer;
+  aspect-ratio: 1200 / 200;
+  overflow: hidden;
+  background: #060A10;
+  outline: none;
+}
+
+.top-promo-banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.top-promo-slide-item:hover .top-promo-banner-img {
+  transform: scale(1.015);
+}
+
+/* Click / Shine Hover Overlay */
+.top-promo-shine-overlay {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  pointer-events: none;
+  transition: left 0.6s ease;
+}
+
+.top-promo-slide-item:hover .top-promo-shine-overlay {
+  left: 140%;
+}
+
+/* Left & Right Navigation Arrows */
+.top-promo-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(8, 13, 21, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.25s ease;
+  opacity: 0;
+}
+
+.top-promo-nav-prev {
+  left: 12px;
+}
+
+.top-promo-nav-next {
+  right: 12px;
+}
+
+.top-promo-banner-wrapper:hover .top-promo-nav-btn {
+  opacity: 1;
+}
+
+.top-promo-nav-btn:hover {
+  background: var(--accent-gold);
+  color: #070A0F;
+  border-color: var(--accent-gold);
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: 0 4px 14px rgba(229, 184, 66, 0.45);
+}
+
+/* Dots Indicator Bar */
+.top-promo-dots {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 10;
+  background: rgba(4, 7, 13, 0.7);
+  backdrop-filter: blur(6px);
+  padding: 4px 8px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.top-promo-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.25s ease;
+}
+
+.top-promo-dot:hover {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.top-promo-dot.active {
+  width: 22px;
+  border-radius: 9999px;
+  background: var(--accent-gold);
+  box-shadow: 0 0 8px rgba(229, 184, 66, 0.6);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .top-promo-banner-section {
+    padding: 10px 0 4px;
+  }
+
+  .top-promo-banner-wrapper {
+    border-radius: 8px;
+  }
+
+  .top-promo-nav-btn {
+    opacity: 0.85; /* Always slightly visible on mobile touch */
+    width: 28px;
+    height: 28px;
+  }
+
+  .top-promo-nav-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .top-promo-nav-prev {
+    left: 6px;
+  }
+
+  .top-promo-nav-next {
+    right: 6px;
+  }
+
+  .top-promo-dots {
+    bottom: 6px;
+    right: 8px;
+    padding: 3px 6px;
+    gap: 4px;
+  }
+
+  .top-promo-dot {
+    width: 5px;
+    height: 5px;
+  }
+
+  .top-promo-dot.active {
+    width: 14px;
+  }
+}

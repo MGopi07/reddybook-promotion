@@ -5,7 +5,7 @@
 
 .match-center-section {
   width: 100%;
-  background: #070A0F;
+  background: var(--bg-primary);
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   position: relative;
   overflow: hidden;
@@ -13,9 +13,34 @@
 }
 
 .match-center-container {
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: 0 16px;
+  width: 100%;
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  transition: max-width var(--transition-normal);
+}
+
+@media (min-width: 1440px) {
+  .match-center-container {
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+}
+
+@media (min-width: 1680px) {
+  .match-center-container {
+    padding-left: 36px;
+    padding-right: 36px;
+  }
+}
+
+@media (max-width: 640px) {
+  .match-center-container {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
 }
 
 /* Header Bar */

@@ -291,6 +291,24 @@
   font-size: 0.95rem;
 }
 
+@media (min-width: 1440px) {
+  .news-grid {
+    gap: 28px;
+  }
+  .news-card-media {
+    height: 220px;
+  }
+}
+
+@media (min-width: 1680px) {
+  .news-grid {
+    gap: 32px;
+  }
+  .news-card-media {
+    height: 240px;
+  }
+}
+
 @media (max-width: 1024px) {
   .news-grid {
     grid-template-columns: repeat(2, 1fr);

@@ -11,7 +11,7 @@
 .promo-container {
   position: relative;
   overflow: hidden;
-  background-color: #070A0F;
+  background-color: var(--bg-card);
   background-image: 
     linear-gradient(90deg, rgba(7, 10, 15, 0.95) 0%, rgba(7, 10, 15, 0.86) 45%, rgba(7, 10, 15, 0.42) 85%, rgba(7, 10, 15, 0.55) 100%),
     url('/images/promo_banner_bg.jpg');
@@ -76,6 +76,30 @@
   flex-shrink: 0;
   position: relative;
   z-index: 2;
+}
+
+@media (min-width: 1440px) {
+  .promo-container {
+    padding: 34px 44px;
+  }
+  .promo-left {
+    max-width: 960px;
+  }
+  .promo-title {
+    font-size: 2.2rem;
+  }
+}
+
+@media (min-width: 1680px) {
+  .promo-container {
+    padding: 40px 52px;
+  }
+  .promo-left {
+    max-width: 1100px;
+  }
+  .promo-title {
+    font-size: 2.5rem;
+  }
 }
 
 @media (max-width: 768px) {

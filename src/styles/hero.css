@@ -1,5 +1,5 @@
 .hero-section {
-  background: #070A0F;
+  background: var(--bg-primary);
   padding-top: 24px;
   padding-bottom: 32px;
 }
@@ -425,6 +425,30 @@
 .sidebar-time {
   font-size: 0.76rem;
   color: var(--text-muted);
+}
+
+@media (min-width: 1440px) {
+  .hero-grid {
+    gap: 28px;
+  }
+  .featured-card {
+    min-height: 520px;
+  }
+  .featured-title {
+    font-size: 2.8rem;
+  }
+}
+
+@media (min-width: 1680px) {
+  .hero-grid {
+    gap: 32px;
+  }
+  .featured-card {
+    min-height: 560px;
+  }
+  .featured-title {
+    font-size: 3.2rem;
+  }
 }
 
 @media (max-width: 1024px) {

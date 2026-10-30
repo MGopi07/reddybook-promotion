@@ -59,6 +59,25 @@
   --transition-slow: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Fluid Responsive Container Scaling across screen sizes */
+@media (min-width: 1440px) {
+  :root {
+    --max-width: 1440px;
+  }
+}
+
+@media (min-width: 1680px) {
+  :root {
+    --max-width: 1620px;
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+    --max-width: 1760px;
+  }
+}
+
 /* Base Reset */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -133,6 +152,28 @@ h1, h2, h3, h4, h5, h6 {
   margin-right: auto;
   padding-left: 20px;
   padding-right: 20px;
+  transition: max-width var(--transition-normal);
+}
+
+@media (min-width: 1440px) {
+  .container {
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+}
+
+@media (min-width: 1680px) {
+  .container {
+    padding-left: 36px;
+    padding-right: 36px;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
 }
 
 /* Badges */

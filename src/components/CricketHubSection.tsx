@@ -50,16 +50,30 @@ const FEATURED_GAMES: GameItem[] = [
   {
     id: 'power-play',
     name: 'POWER PLAY',
-    subtitle: 'Fast. Fun. Free to play.',
+    subtitle: 'Fast & Thrilling',
     badge: 'NEW',
     image: '/images/game_power_play.jpg',
   },
   {
     id: 'super-over',
     name: 'SUPER OVER',
-    subtitle: 'One Over. Big Thrill.',
+    subtitle: 'One Over Big Win',
     badge: 'HOT',
     image: '/images/game_super_over.jpg',
+  },
+  {
+    id: 'premier-six',
+    name: 'PREMIER SIX',
+    subtitle: 'T20 Boundary Rush',
+    badge: 'HOT',
+    image: '/images/promo_cricket_action.jpg',
+  },
+  {
+    id: 'lucky-spin',
+    name: 'LUCKY SPINS',
+    subtitle: 'Instant Cash Drops',
+    badge: 'NEW',
+    image: '/images/promo_bonus_coins.jpg',
   },
 ];
 
@@ -433,13 +447,18 @@ export default function CricketHubSection() {
               </article>
             </div>
 
-            {/* Featured Games Grid (4 Cards) */}
+            {/* Featured Games Infinite Marquee Carousel */}
             <div className="hub-block">
               <div className="hub-block-header">
-                <h3 className="hub-block-title">
-                  <Gamepad2 size={20} />
-                  Featured Games
-                </h3>
+                <div className="hub-block-title-wrap">
+                  <h3 className="hub-block-title">
+                    <Gamepad2 size={20} />
+                    Featured Games
+                  </h3>
+                  <span className="hub-marquee-pill">
+                    <span className="hub-marquee-dot" /> Auto Scrolling
+                  </span>
+                </div>
                 <button
                   type="button"
                   onClick={() => handleOpenClubModal('REDDY BOOK CASINO & GAMING')}
@@ -449,50 +468,52 @@ export default function CricketHubSection() {
                 </button>
               </div>
 
-              <div className="hub-games-grid-4">
-                {FEATURED_GAMES.map((game) => (
-                  <div key={game.id} className="hub-game-card">
-                    <div className="hub-game-artwork-wrap">
-                      <span
-                        className={`hub-game-badge ${
-                          game.badge === 'HOT' ? 'hub-badge-hot' : 'hub-badge-new'
-                        }`}
-                      >
-                        {game.badge === 'HOT' ? (
-                          <>
-                            <Flame size={10} style={{ display: 'inline', marginRight: 3, verticalAlign: '-1px' }} />
-                            HOT
-                          </>
-                        ) : (
-                          <>
-                            <Sparkles size={10} style={{ display: 'inline', marginRight: 3, verticalAlign: '-1px' }} />
-                            NEW
-                          </>
-                        )}
-                      </span>
-                      <EditorialImage
-                        src={game.image}
-                        alt={game.name}
-                        loading="lazy"
-                      />
-                    </div>
-
-                    <div className="hub-game-info">
-                      <div className="hub-game-meta">
-                        <h5 className="hub-game-name">{game.name}</h5>
-                        <span className="hub-game-sub">{game.subtitle}</span>
+              <div className="hub-games-marquee-wrapper">
+                <div className="hub-games-marquee-track">
+                  {[...FEATURED_GAMES, ...FEATURED_GAMES].map((game, idx) => (
+                    <div key={`${game.id}-${idx}`} className="hub-game-card hub-game-card-marquee">
+                      <div className="hub-game-artwork-wrap">
+                        <span
+                          className={`hub-game-badge ${
+                            game.badge === 'HOT' ? 'hub-badge-hot' : 'hub-badge-new'
+                          }`}
+                        >
+                          {game.badge === 'HOT' ? (
+                            <>
+                              <Flame size={10} style={{ display: 'inline', marginRight: 3, verticalAlign: '-1px' }} />
+                              HOT
+                            </>
+                          ) : (
+                            <>
+                              <Sparkles size={10} style={{ display: 'inline', marginRight: 3, verticalAlign: '-1px' }} />
+                              NEW
+                            </>
+                          )}
+                        </span>
+                        <EditorialImage
+                          src={game.image}
+                          alt={game.name}
+                          loading="lazy"
+                        />
                       </div>
 
-                      <button
-                        type="button"
-                        onClick={() => handleOpenClubModal(`PLAY ${game.name}`)}
-                        className="hub-play-now-btn"
-                      >
-                        Play Now <ArrowRight size={13} />
-                      </button>
+                      <div className="hub-game-info">
+                        <div className="hub-game-meta">
+                          <h5 className="hub-game-name">{game.name}</h5>
+                          <span className="hub-game-sub">{game.subtitle}</span>
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() => handleOpenClubModal(`PLAY ${game.name}`)}
+                          className="hub-play-now-btn"
+                        >
+                          Play Now <ArrowRight size={13} />
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
 

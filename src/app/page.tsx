@@ -1,5 +1,6 @@
 import React from 'react';
 import NewsTicker from '@/components/NewsTicker';
+import TopPromoBanner from '@/components/TopPromoBanner';
 import LiveScoreSlider from '@/components/LiveScoreSlider';
 import FeaturedStory from '@/components/FeaturedStory';
 import PromotionalBanner from '@/components/PromotionalBanner';
@@ -16,6 +17,9 @@ export default function HomePage() {
     <>
       {/* 1. Sports News Ticker */}
       <NewsTicker />
+
+      {/* Top Promotional Strip Banner (above Match Center) */}
+      <TopPromoBanner />
 
       {/* 2. Live Score Slider (First Section Match Center) */}
       <LiveScoreSlider />
