@@ -81,10 +81,11 @@ export default function AnalysisBanner() {
           {/* Right Column: Visual Telemetry Art */}
           <div className="analysis-feature-visual">
             <img
-              src="/images/tactical_cricket_analysis.jpg"
+              src="/images/tactical_cricket_analysis.webp"
               alt="Fast bowler delivery stride with live pitch trajectory and speed telemetry"
               className="analysis-feature-img"
               loading="lazy"
+              decoding="async"
             />
             <div className="analysis-visual-overlay" />
 

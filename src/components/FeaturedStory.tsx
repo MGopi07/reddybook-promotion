@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { ArrowRight, Clock, Flame, ChevronLeft, ChevronRight, ArrowUpRight } from 'lucide-react';
 import { Article } from '@/lib/content';
 import EditorialImage from './EditorialImage';
-import JoinModal from './JoinModal';
 import PromoSidebarSlider from './PromoSidebarSlider';
 import '@/styles/hero.css';
 
@@ -27,7 +26,6 @@ export default function FeaturedStory({
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const currentArticle = slides[currentIndex] || slides[0];
 
@@ -133,16 +131,18 @@ export default function FeaturedStory({
 
             {/* CTA Group with KNOW MORE Button */}
             <div className="hero-cta-group">
-              <button
+              <a
+                href="https://api.whatsapp.com/send/?phone=447868175325&text=Hi+Reddy+Book%21+I+want+to+know+more+about+the+club.&type=phone_number&app_absent=0"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn-hero-play-now"
-                onClick={() => setIsModalOpen(true)}
-                aria-label="Know more about Reddy Book Club"
+                aria-label="Know more about Reddy Book Club on WhatsApp"
               >
                 <span className="play-icon-circle">
                   <ArrowUpRight size={13} color="var(--accent-gold)" strokeWidth={2.5} />
                 </span>
                 <span>KNOW MORE</span>
-              </button>
+              </a>
 
               <Link href={`/news/${currentArticle.slug}`} className="featured-cta">
                 <span>Read Story</span>
@@ -171,14 +171,6 @@ export default function FeaturedStory({
         {/* Right Column: Online Promotion Ad Showcase (2 cards continuously rotating through 6 offers) */}
         <PromoSidebarSlider />
       </div>
-
-      {/* Play Now / VIP Gaming Modal */}
-      <JoinModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        title="REDDY BOOK • PLAY CRICKET & WIN"
-        destinationUrl="https://api.whatsapp.com/send/?phone=447868175325&text=Hi+Reddy+Book%21+I+want+to+join+the+club.&type=phone_number&app_absent=0"
-      />
     </section>
   );
 }

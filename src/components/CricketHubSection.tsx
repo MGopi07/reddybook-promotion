@@ -18,10 +18,11 @@ import {
   Video,
   Radio,
   Send,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 import TeamFlag from './TeamFlag';
 import EditorialImage from './EditorialImage';
-import JoinModal from './JoinModal';
 import { SAMPLE_MATCHES, MatchScore } from '@/lib/matches';
 import '@/styles/crickethub.css';
 
@@ -39,42 +40,42 @@ const FEATURED_GAMES: GameItem[] = [
     name: 'CRICKET CLASH',
     subtitle: 'Real Cricket Action',
     badge: 'HOT',
-    image: '/images/game_cricket_clash.jpg',
+    image: '/images/game_cricket_clash.webp',
   },
   {
     id: 'stadium-kings',
     name: 'STADIUM KINGS',
     subtitle: 'Build Your Team',
     badge: 'NEW',
-    image: '/images/game_stadium_kings.jpg',
+    image: '/images/game_stadium_kings.webp',
   },
   {
     id: 'power-play',
     name: 'POWER PLAY',
     subtitle: 'Fast & Thrilling',
     badge: 'NEW',
-    image: '/images/game_power_play.jpg',
+    image: '/images/game_power_play.webp',
   },
   {
     id: 'super-over',
     name: 'SUPER OVER',
     subtitle: 'Super Over Challenge',
     badge: 'HOT',
-    image: '/images/game_super_over.jpg',
+    image: '/images/game_super_over.webp',
   },
   {
     id: 'premier-six',
     name: 'PREMIER SIX',
     subtitle: 'T20 Boundary Rush',
     badge: 'HOT',
-    image: '/images/game_premier_six.jpg',
+    image: '/images/game_premier_six.webp',
   },
   {
     id: 'lucky-spin',
     name: 'LUCKY SPINS',
     subtitle: 'Dynamic Spin Arena',
     badge: 'NEW',
-    image: '/images/game_lucky_spins.jpg',
+    image: '/images/game_lucky_spins.webp',
   },
 ];
 
@@ -84,7 +85,7 @@ const COMPACT_NEWS = [
     title: 'Rohit Sharma hints at Test comeback in 2026',
     time: '2 hours ago',
     tag: 'TEST',
-    image: '/images/batsman_pullshot.jpg',
+    image: '/images/batsman_pullshot.webp',
     href: '/news/india-vs-england-test-series-analysis',
   },
   {
@@ -92,7 +93,7 @@ const COMPACT_NEWS = [
     title: 'India Women eye series win in final ODI decider',
     time: '4 hours ago',
     tag: 'ODI',
-    image: '/images/match_action.jpg',
+    image: '/images/match_action.webp',
     href: '/news/ipl-auction-tactical-breakdown',
   },
   {
@@ -100,7 +101,7 @@ const COMPACT_NEWS = [
     title: 'Australia name strong 16-member squad for 2026 tour',
     time: '6 hours ago',
     tag: 'TOUR',
-    image: '/images/bowler_runup.jpg',
+    image: '/images/bowler_runup.webp',
     href: '/news/t20-world-cup-pitch-report',
   },
   {
@@ -108,7 +109,7 @@ const COMPACT_NEWS = [
     title: 'Bangladesh prepare for high-stakes West Indies Test series',
     time: '8 hours ago',
     tag: 'TEST',
-    image: '/images/tactical_field.jpg',
+    image: '/images/tactical_field.webp',
     href: '/news/modern-fast-bowling-workload-biomechanics',
   },
 ];
@@ -118,38 +119,71 @@ const MORE_NEWS = [
     id: 'more-1',
     title: 'Pakistan eye strong start in T20 series opener',
     time: '10 hours ago',
-    image: '/images/bowler_runup.jpg',
+    image: '/images/bowler_runup.webp',
     href: '/news/t20-world-cup-pitch-report',
   },
   {
     id: 'more-2',
     title: 'England announce 15-man squad for West Indies tour',
     time: '12 hours ago',
-    image: '/images/match_action.jpg',
+    image: '/images/match_action.webp',
     href: '/news/ipl-auction-tactical-breakdown',
   },
   {
     id: 'more-3',
     title: 'New Zealand build momentum ahead of the World Cup',
     time: '14 hours ago',
-    image: '/images/tactical_field.jpg',
+    image: '/images/tactical_field.webp',
     href: '/news/india-vs-england-test-series-analysis',
   },
 ];
 
 export default function CricketHubSection() {
-  const [modalState, setModalState] = useState<{
-    isOpen: boolean;
-    title: string;
-  }>({
-    isOpen: false,
-    title: 'PLAY ON REDDY BOOK CLUB',
-  });
 
   const [liveMatch, setLiveMatch] = useState<MatchScore>(SAMPLE_MATCHES[0]);
   const [upcomingMatches, setUpcomingMatches] = useState<MatchScore[]>(
     SAMPLE_MATCHES.filter((m) => m.status === 'UPCOMING').slice(0, 3)
   );
+
+  const [gameSlideIndex, setGameSlideIndex] = useState(0);
+  const [isGameHovered, setIsGameHovered] = useState(false);
+  const [gamesPerView, setGamesPerView] = useState(3);
+
+  // Responsive gamesPerView tracking
+  useEffect(() => {
+    const updateView = () => {
+      if (typeof window === 'undefined') return;
+      if (window.innerWidth <= 480) {
+        setGamesPerView(1);
+      } else if (window.innerWidth <= 768) {
+        setGamesPerView(2);
+      } else {
+        setGamesPerView(3);
+      }
+    };
+    updateView();
+    window.addEventListener('resize', updateView);
+    return () => window.removeEventListener('resize', updateView);
+  }, []);
+
+  const maxGameSlide = Math.max(0, FEATURED_GAMES.length - gamesPerView);
+
+  // Auto-advance featured games smoothly every 4 seconds, pausing when hovered
+  useEffect(() => {
+    if (isGameHovered || maxGameSlide === 0) return;
+    const timer = setInterval(() => {
+      setGameSlideIndex((prev) => (prev >= maxGameSlide ? 0 : prev + 1));
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [isGameHovered, maxGameSlide]);
+
+  const handlePrevGame = () => {
+    setGameSlideIndex((prev) => Math.max(0, prev - 1));
+  };
+
+  const handleNextGame = () => {
+    setGameSlideIndex((prev) => (prev >= maxGameSlide ? 0 : prev + 1));
+  };
 
   useEffect(() => {
     let isMounted = true;
@@ -181,10 +215,8 @@ export default function CricketHubSection() {
   }, []);
 
   const handleOpenClubModal = (title: string) => {
-    setModalState({
-      isOpen: true,
-      title,
-    });
+    const waUrl = `https://api.whatsapp.com/send/?phone=447868175325&text=Hi+Reddy+Book%21+I+want+information+about+${encodeURIComponent(title)}.&type=phone_number&app_absent=0`;
+    window.open(waUrl, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -323,7 +355,7 @@ export default function CricketHubSection() {
                 onClick={() => handleOpenClubModal('WATCH T20 WORLD CUP HIGHLIGHTS')}
               >
                 <EditorialImage
-                  src="/images/match_action.jpg"
+                  src="/images/match_action.webp"
                   alt="Best Moments • T20 World Cup 2024"
                   loading="lazy"
                 />
@@ -435,7 +467,7 @@ export default function CricketHubSection() {
               <article className="hub-featured-editorial-card">
                 <div className="hub-featured-media">
                   <EditorialImage
-                    src="/images/stadium_floodlights.jpg"
+                    src="/images/stadium_floodlights.webp"
                     alt="India eye series win after dominant performance"
                     loading="lazy"
                   />
@@ -466,7 +498,7 @@ export default function CricketHubSection() {
               </article>
             </div>
 
-            {/* Featured Games Infinite Marquee Carousel */}
+            {/* Featured Games Perfectly Aligned Slider */}
             <div className="hub-block">
               <div className="hub-block-header">
                 <div className="hub-block-title-wrap">
@@ -474,23 +506,54 @@ export default function CricketHubSection() {
                     <Gamepad2 size={20} />
                     Featured Games
                   </h3>
-                  <span className="hub-marquee-pill">
+                  {/* <span className="hub-marquee-pill">
                     <span className="hub-marquee-dot" /> Auto Scrolling
-                  </span>
+                  </span> */}
                 </div>
-                <button
-                  type="button"
-                  onClick={() => handleOpenClubModal('REDDY BOOK CASINO & GAMING')}
-                  className="hub-view-all"
-                >
-                  View All <ArrowRight size={13} />
-                </button>
+                <div className="hub-header-actions">
+                  <div className="hub-slider-arrows" aria-label="Game Slider Controls">
+                    <button
+                      type="button"
+                      onClick={handlePrevGame}
+                      className="hub-slider-arrow-btn"
+                      aria-label="Previous Games"
+                      disabled={gameSlideIndex === 0}
+                    >
+                      <ChevronLeft size={16} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleNextGame}
+                      className="hub-slider-arrow-btn"
+                      aria-label="Next Games"
+                      disabled={gameSlideIndex >= maxGameSlide}
+                    >
+                      <ChevronRight size={16} />
+                    </button>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => handleOpenClubModal('REDDY BOOK CASINO & GAMING')}
+                    className="hub-view-all"
+                  >
+                    View All <ArrowRight size={13} />
+                  </button>
+                </div>
               </div>
 
-              <div className="hub-games-marquee-wrapper">
-                <div className="hub-games-marquee-track">
-                  {[...FEATURED_GAMES, ...FEATURED_GAMES].map((game, idx) => (
-                    <div key={`${game.id}-${idx}`} className="hub-game-card hub-game-card-marquee">
+              <div
+                className="hub-games-slider-viewport"
+                onMouseEnter={() => setIsGameHovered(true)}
+                onMouseLeave={() => setIsGameHovered(false)}
+              >
+                <div
+                  className="hub-games-slider-track"
+                  style={{
+                    transform: `translateX(calc(-${gameSlideIndex} * ((100% + 12px) / ${gamesPerView})))`,
+                  }}
+                >
+                  {FEATURED_GAMES.map((game) => (
+                    <div key={game.id} className="hub-game-card hub-game-card-slider">
                       <div className="hub-game-artwork-wrap">
                         <span
                           className={`hub-game-badge ${
@@ -519,7 +582,6 @@ export default function CricketHubSection() {
                       <div className="hub-game-info">
                         <div className="hub-game-meta">
                           <h5 className="hub-game-name">{game.name}</h5>
-                          {/* <span className="hub-game-sub">{game.subtitle}</span> */}
                         </div>
 
                         <button
@@ -534,6 +596,21 @@ export default function CricketHubSection() {
                   ))}
                 </div>
               </div>
+
+              {/* Indicator Dots */}
+              {/* <div className="hub-games-slider-dots" role="tablist" aria-label="Game slide indicators">
+                {Array.from({ length: maxGameSlide + 1 }).map((_, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    className={`hub-games-slider-dot ${idx === gameSlideIndex ? 'active' : ''}`}
+                    onClick={() => setGameSlideIndex(idx)}
+                    aria-label={`Go to games slide ${idx + 1}`}
+                    role="tab"
+                    aria-selected={idx === gameSlideIndex}
+                  />
+                ))}
+              </div> */}
             </div>
 
             {/* More News Section */}
@@ -702,7 +779,7 @@ export default function CricketHubSection() {
               <div className="portal-popular-game-banner">
                 <div className="popular-game-thumb">
                   <EditorialImage
-                    src="/images/game_cricket_clash.jpg"
+                    src="/images/game_cricket_clash.webp"
                     alt="Cricket Clash"
                     loading="lazy"
                   />
@@ -802,13 +879,6 @@ export default function CricketHubSection() {
 
         </div>
       </div>
-
-      {/* Interactive Modal */}
-      <JoinModal
-        isOpen={modalState.isOpen}
-        onClose={() => setModalState((prev) => ({ ...prev, isOpen: false }))}
-        title={modalState.title}
-      />
     </section>
   );
 }

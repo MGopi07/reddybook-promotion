@@ -1,6 +1,8 @@
 import { MetadataRoute } from 'next';
 import { ARTICLES, VIDEOS } from '@/lib/content';
 
+export const revalidate = 3600; // Automatically regenerate sitemap every hour in background
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://reddybook.club';
 
@@ -50,13 +52,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  // Dynamic news articles
-  const articleRoutes: MetadataRoute.Sitemap = ARTICLES.map((article) => ({
-    url: `${baseUrl}/news/${article.slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly',
-    priority: 0.8,
-  }));
+  // Dynamic news articles automatically indexed from content registry
+  const articleRoutes: MetadataRoute.Sitemap = ARTICLES.map((article) => {
+    const pubDate = article.publishedAt ? new Date(article.publishedAt) : new Date();
+    const lastMod = isNaN(pubDate.getTime()) ? new Date() : pubDate;
+    return {
+      url: `${baseUrl}/news/${article.slug}`,
+      lastModified: lastMod,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    };
+  });
 
   // Dynamic video pages
   const videoRoutes: MetadataRoute.Sitemap = VIDEOS.map((video) => ({

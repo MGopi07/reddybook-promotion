@@ -2,8 +2,6 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import JoinModal from './JoinModal';
-import { BRAND_CONFIG } from '@/lib/content';
 import '@/styles/toppromobanner.css';
 
 interface BannerSlide {
@@ -16,19 +14,19 @@ interface BannerSlide {
 const BANNER_SLIDES: BannerSlide[] = [
   {
     id: 'banner-sportsbook',
-    image: '/images/banner/1.png',
+    image: '/images/banner/1.webp',
     alt: 'Reddy Book Sportsbook - Comprehensive Cricket & Sports Hub',
     title: 'REDDY BOOK SPORTSBOOK',
   },
   {
     id: 'banner-cricket',
-    image: '/images/banner/2.png',
+    image: '/images/banner/2.webp',
     alt: 'Reddy Book Cricket - Match Analytics & Fixture Coverage',
     title: 'REDDY BOOK CRICKET',
   },
   {
     id: 'banner-badminton',
-    image: '/images/banner/3.png',
+    image: '/images/banner/3.webp',
     alt: 'Reddy Book Sports - Live Sports Updates & Editorial Analysis',
     title: 'REDDY BOOK SPORTS',
   },
@@ -37,8 +35,6 @@ const BANNER_SLIDES: BannerSlide[] = [
 export default function TopPromoBanner() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedTitle, setSelectedTitle] = useState('REDDY BOOK SPORTSBOOK');
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const total = BANNER_SLIDES.length;
@@ -69,13 +65,12 @@ export default function TopPromoBanner() {
   }, [isHovered, nextSlide]);
 
   const handleBannerClick = (slide: BannerSlide) => {
-    setSelectedTitle(slide.title);
-    setIsModalOpen(true);
+    const waUrl = `https://api.whatsapp.com/send/?phone=447868175325&text=Hi+Reddy+Book%21+I+want+to+claim+${encodeURIComponent(slide.title)}.&type=phone_number&app_absent=0`;
+    window.open(waUrl, '_blank', 'noopener,noreferrer');
   };
 
   return (
-    <>
-      <section
+    <section
         className="top-promo-banner-section"
         aria-label="Featured Sportsbook Promotions"
         onMouseEnter={() => setIsHovered(true)}
@@ -110,6 +105,7 @@ export default function TopPromoBanner() {
                     alt={slide.alt}
                     className="top-promo-banner-img"
                     loading={idx === 0 ? 'eager' : 'lazy'}
+                    decoding="async"
                   />
                   {/* Subtle click shine hover effect overlay */}
                   <span className="top-promo-shine-overlay" />
@@ -156,14 +152,5 @@ export default function TopPromoBanner() {
           </div>
         </div>
       </section>
-
-      {/* Reusable Join/Claim Modal */}
-      <JoinModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        title={selectedTitle}
-        destinationUrl={BRAND_CONFIG.joinNowUrl}
-      />
-    </>
   );
 }

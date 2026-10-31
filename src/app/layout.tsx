@@ -26,6 +26,21 @@ export const metadata: Metadata = {
     'IPL',
     'Cricket Videos',
   ],
+  authors: [{ name: 'Reddy Book Sports Editorial Team', url: 'https://reddybook.club' }],
+  creator: 'Reddy Book',
+  publisher: 'Reddy Book',
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   alternates: {
     canonical: '/',
   },

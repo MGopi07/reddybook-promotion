@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { Trophy, Users, Globe, Activity, ShieldCheck, Ticket } from 'lucide-react';
-import JoinModal from './JoinModal';
 import '@/styles/sportsbetting.css';
 
 type SportKey = 'cricket' | 'kabaddi' | 'football' | 'tennis' | 'basketball';
@@ -156,19 +155,17 @@ const SPORTS_DATA: Record<SportKey, SportContent> = {
 
 export default function SportsBettingSection() {
   const [activeTab, setActiveTab] = useState<SportKey>('cricket');
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalTitle, setModalTitle] = useState('REGISTER & PLACE LIVE BET - REDDYBOOK');
 
   const content = SPORTS_DATA[activeTab];
 
   const handleOddsClick = (market: OddsMarket, type: 'BACK' | 'LAY', odds: string) => {
-    setModalTitle(`BET SLIP: ${market.label} [${type} @ ${odds}] - REDDYBOOK`);
-    setIsModalOpen(true);
+    const waUrl = `https://api.whatsapp.com/send/?phone=447868175325&text=Hi+Reddy+Book%21+I+want+VIP+Odds+for+${encodeURIComponent(market.label)}+(${type}+@+${odds}).&type=phone_number&app_absent=0`;
+    window.open(waUrl, '_blank', 'noopener,noreferrer');
   };
 
   const handleRegisterClick = () => {
-    setModalTitle(`REGISTER & PLACE BET: ${content.liveMatch.title} - REDDYBOOK`);
-    setIsModalOpen(true);
+    const waUrl = `https://api.whatsapp.com/send/?phone=447868175325&text=Hi+Reddy+Book%21+I+want+to+explore+sports+telemetry+and+place+bets+on+${encodeURIComponent(content.liveMatch.title)}.&type=phone_number&app_absent=0`;
+    window.open(waUrl, '_blank', 'noopener,noreferrer');
   };
 
   const renderTabIcon = (key: SportKey) => {
@@ -315,14 +312,6 @@ export default function SportsBettingSection() {
           </div>
         </div>
       </div>
-
-      {/* Bet Slip / Register Modal */}
-      <JoinModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        title={modalTitle}
-        destinationUrl="https://api.whatsapp.com/send/?phone=447868175325&text=Hi+Reddy+Book%21+I+want+to+join+the+club.&type=phone_number&app_absent=0"
-      />
     </section>
   );
 }

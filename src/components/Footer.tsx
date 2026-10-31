@@ -1,14 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { Flame, ArrowUpRight } from 'lucide-react';
 import { BRAND_CONFIG } from '@/lib/content';
-import JoinModal from './JoinModal';
 import '@/styles/footer.css';
 
 export default function Footer() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <footer className="site-footer">
@@ -18,9 +16,11 @@ export default function Footer() {
           <div className="footer-brand-col">
             <Link href="/" className="brand-logo" aria-label="Reddy Book Cricket Home">
               <img
-                src="/images/reddybook-logo.png"
+                src="/images/reddybook-logo.webp"
                 alt="Reddy Book"
                 className="brand-logo-img"
+                loading="lazy"
+                decoding="async"
               />
               
             </Link>
@@ -88,7 +88,14 @@ export default function Footer() {
             <h4 className="footer-heading">Editorial</h4>
             <ul className="footer-nav-list">
               <li>
-                <Link href="/news" className="footer-nav-link">Latest Stories</Link>
+                <a
+                  href="https://api.whatsapp.com/send/?phone=447868175325&text=Hi+Reddy+Book%21+I+want+Latest+Stories.&type=phone_number&app_absent=0"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-nav-link"
+                >
+                  Latest Stories
+                </a>
               </li>
               <li>
                 <a
@@ -101,7 +108,14 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <Link href="/news?category=Match+Reviews" className="footer-nav-link">Match Reviews</Link>
+                <a
+                  href="https://api.whatsapp.com/send/?phone=447868175325&text=Hi+Reddy+Book%21+I+need+Match+Reviews.&type=phone_number&app_absent=0"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-nav-link"
+                >
+                  Match Reviews
+                </a>
               </li>
               <li>
                 <a
@@ -114,7 +128,14 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <Link href="/news?category=IPL" className="footer-nav-link">IPL Hub</Link>
+                <a
+                  href="https://api.whatsapp.com/send/?phone=447868175325&text=Hi+Reddy+Book%21+I+need+IPL+Hub+Updates.&type=phone_number&app_absent=0"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-nav-link"
+                >
+                  IPL Hub
+                </a>
               </li>
             </ul>
           </div>
@@ -147,34 +168,19 @@ export default function Footer() {
             <p className="footer-join-desc">
               Join India&apos;s leading sports intelligence &amp; tournament analytics portal. Join the Reddybook Sports Community for 24/7 match analysis &amp; dedicated member support.
             </p>
-            <button
+            <a
+              href="https://api.whatsapp.com/send/?phone=447868175325&text=Hi+Reddy+Book%21+I+want+to+join+the+club.&type=phone_number&app_absent=0"
+              target="_blank"
+              rel="noopener noreferrer"
               className="footer-join-now-btn"
-              onClick={() => setIsModalOpen(true)}
-              aria-label="Join Reddy Book VIP Club"
+              aria-label="Join Reddy Book VIP Club on WhatsApp"
             >
               <span>JOIN NOW</span>
               <ArrowUpRight size={16} />
-            </button>
-            <a
-              href="https://api.whatsapp.com/send/?phone=447868175325&text=Hi+Reddy+Book%21+I+need+help.&type=phone_number&app_absent=0"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="footer-wa-quick-link"
-              title="Official WhatsApp Support"
-            >
-              <span className="footer-wa-dot" />
-              <span>WhatsApp: +44 7868 175325</span>
             </a>
+            
           </div>
         </div>
-
-        {/* VIP Join Modal */}
-        <JoinModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          title="JOIN REDDY BOOK VIP CLUB"
-          destinationUrl="https://api.whatsapp.com/send/?phone=447868175325&text=Hi+Reddy+Book%21+I+want+to+join+the+club.&type=phone_number&app_absent=0"
-        />
 
         {/* Footer Bottom */}
         <div className="footer-bottom">

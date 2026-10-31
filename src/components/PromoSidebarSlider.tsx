@@ -15,14 +15,11 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { PROMOTION_CARDS, PromoCard } from '@/lib/promotions';
-import JoinModal from './JoinModal';
 import '@/styles/promoslider.css';
 
 export default function PromoSidebarSlider() {
   const [startIndex, setStartIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-  const [selectedPromo, setSelectedPromo] = useState<PromoCard | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const total = PROMOTION_CARDS.length;
 
@@ -52,8 +49,8 @@ export default function PromoSidebarSlider() {
   const handleAction = (promo: PromoCard, e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setSelectedPromo(promo);
-    setIsModalOpen(true);
+    const waUrl = `https://api.whatsapp.com/send/?phone=447868175325&text=Hi+Reddy+Book%21+I+want+to+claim+${encodeURIComponent(promo.title)}.&type=phone_number&app_absent=0`;
+    window.open(waUrl, '_blank', 'noopener,noreferrer');
   };
 
   const renderIcon = (name: PromoCard['icon']) => {
@@ -183,16 +180,6 @@ export default function PromoSidebarSlider() {
           />
         ))}
       </div>
-
-      {/* Join/Play Modal */}
-      {selectedPromo && (
-        <JoinModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          title={`CLAIM: ${selectedPromo.title}`}
-          destinationUrl="https://api.whatsapp.com/send/?phone=447868175325&text=Hi+Reddy+Book%21+I+want+to+join+the+club.&type=phone_number&app_absent=0"
-        />
-      )}
     </aside>
   );
 }

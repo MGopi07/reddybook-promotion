@@ -32,6 +32,18 @@ export function generateMetadata({ params }: ArticlePageProps): Metadata {
   return {
     title: `${article.title} | REDDY BOOK`,
     description: article.excerpt,
+    authors: [{ name: article.author.name }],
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
     alternates: {
       canonical: `/news/${article.slug}`,
     },
@@ -126,7 +138,7 @@ export default function ArticlePage({ params }: ArticlePageProps) {
                 <EditorialImage
                   src={article.author.avatar}
                   alt={article.author.name}
-                  fallbackSrc="/images/author_1.jpg"
+                  fallbackSrc="/images/author_1.webp"
                 />
               </div>
               <div className="author-profile-text">

@@ -25,7 +25,7 @@ export const PROMOTION_CARDS: PromoCard[] = [
     icon: 'Gift',
     accentGradient: 'linear-gradient(135deg, #F5D77F 0%, #E5B842 100%)',
     bgGradient: 'linear-gradient(135deg, rgba(229, 184, 66, 0.12) 0%, rgba(15, 22, 34, 0.95) 100%)',
-    bgImage: '/images/promo_bonus_coins.jpg',
+    bgImage: '/images/promo_bonus_coins.webp',
   },
   {
     id: 'promo-2',
@@ -38,7 +38,7 @@ export const PROMOTION_CARDS: PromoCard[] = [
     icon: 'Zap',
     accentGradient: 'linear-gradient(135deg, #FF6B6B 0%, #EE5253 100%)',
     bgGradient: 'linear-gradient(135deg, rgba(238, 82, 83, 0.14) 0%, rgba(15, 22, 34, 0.95) 100%)',
-    bgImage: '/images/promo_cricket_action.jpg',
+    bgImage: '/images/promo_cricket_action.webp',
   },
   {
     id: 'promo-3',
@@ -51,7 +51,7 @@ export const PROMOTION_CARDS: PromoCard[] = [
     icon: 'Crown',
     accentGradient: 'linear-gradient(135deg, #A29BFE 0%, #6C5CE7 100%)',
     bgGradient: 'linear-gradient(135deg, rgba(108, 92, 231, 0.14) 0%, rgba(15, 22, 34, 0.95) 100%)',
-    bgImage: '/images/promo_vip_card.jpg',
+    bgImage: '/images/promo_vip_card.webp',
   },
   {
     id: 'promo-4',
@@ -64,7 +64,7 @@ export const PROMOTION_CARDS: PromoCard[] = [
     icon: 'Coins',
     accentGradient: 'linear-gradient(135deg, #00B894 0%, #00CEC9 100%)',
     bgGradient: 'linear-gradient(135deg, rgba(0, 184, 148, 0.12) 0%, rgba(15, 22, 34, 0.95) 100%)',
-    bgImage: '/images/promo_bonus_coins.jpg',
+    bgImage: '/images/promo_bonus_coins.webp',
   },
   {
     id: 'promo-5',
@@ -77,7 +77,7 @@ export const PROMOTION_CARDS: PromoCard[] = [
     icon: 'Trophy',
     accentGradient: 'linear-gradient(135deg, #FDCB6E 0%, #E5B842 100%)',
     bgGradient: 'linear-gradient(135deg, rgba(253, 203, 110, 0.13) 0%, rgba(15, 22, 34, 0.95) 100%)',
-    bgImage: '/images/promo_trophy_gold.jpg',
+    bgImage: '/images/promo_trophy_gold.webp',
   },
   {
     id: 'promo-6',
@@ -90,6 +90,6 @@ export const PROMOTION_CARDS: PromoCard[] = [
     icon: 'Flame',
     accentGradient: 'linear-gradient(135deg, #74B9FF 0%, #0984E3 100%)',
     bgGradient: 'linear-gradient(135deg, rgba(9, 132, 227, 0.14) 0%, rgba(15, 22, 34, 0.95) 100%)',
-    bgImage: '/images/promo_cricket_action.jpg',
+    bgImage: '/images/promo_cricket_action.webp',
   },
 ];

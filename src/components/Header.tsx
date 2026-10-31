@@ -20,12 +20,10 @@ import {
   Lock,
 } from 'lucide-react';
 import { BRAND_CONFIG } from '@/lib/content';
-import JoinModal from './JoinModal';
 import '@/styles/header.css';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
   const pathname = usePathname();
 
   const WHATSAPP_MATCH_PREVIEWS =
@@ -91,9 +89,10 @@ export default function Header() {
           {/* Brand Logo */}
           <Link href="/" className="brand-logo" aria-label="Reddy Book Cricket Home">
             <img
-              src="/images/reddybook-logo.png"
+              src="/images/reddybook-logo.webp"
               alt="Reddy Book"
               className="brand-logo-img"
+              decoding="async"
             />
           </Link>
 
@@ -124,14 +123,16 @@ export default function Header() {
 
           {/* Header Actions */}
           <div className="header-actions">
-            <button
+            <a
+              href={BRAND_CONFIG.joinNowUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn-join"
-              onClick={() => setIsJoinModalOpen(true)}
-              aria-label="Join Reddy Book Club"
+              aria-label="Join Reddy Book Club on WhatsApp"
             >
               <span>Join Now</span>
               <ArrowUpRight size={16} />
-            </button>
+            </a>
 
             {/* Mobile menu toggle */}
             <button
@@ -169,9 +170,10 @@ export default function Header() {
             aria-label="Reddy Book Home"
           >
             <img
-              src="/images/reddybook-logo.png"
+              src="/images/reddybook-logo.webp"
               alt="Reddy Book"
               className="offcanvas-logo-img"
+              decoding="async"
             />
           </Link>
           <button
@@ -257,34 +259,27 @@ export default function Header() {
 
         {/* Offcanvas Footer */}
         <div className="offcanvas-footer">
-          <button
+          <a
+            href={BRAND_CONFIG.joinNowUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             className="btn-join offcanvas-btn-primary"
-            onClick={() => {
-              setMobileMenuOpen(false);
-              setIsJoinModalOpen(true);
-            }}
+            onClick={() => setMobileMenuOpen(false)}
           >
             <span>Join Now</span>
             <ArrowUpRight size={18} />
-          </button>
-          <button
+          </a>
+          <a
+            href={BRAND_CONFIG.joinNowUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             className="login-link offcanvas-btn-secondary"
-            onClick={() => {
-              setMobileMenuOpen(false);
-              setIsJoinModalOpen(true);
-            }}
+            onClick={() => setMobileMenuOpen(false)}
           >
             Member Login
-          </button>
+          </a>
         </div>
       </aside>
-
-      {/* Reusable Join Modal */}
-      <JoinModal
-        isOpen={isJoinModalOpen}
-        onClose={() => setIsJoinModalOpen(false)}
-        destinationUrl={BRAND_CONFIG.joinNowUrl}
-      />
     </>
   );
 }

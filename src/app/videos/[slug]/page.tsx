@@ -26,12 +26,27 @@ export function generateMetadata({ params }: VideoDetailPageProps): Metadata {
   const video = VIDEOS.find((v) => v.slug === params.slug);
   if (!video) {
     return {
-      title: 'Video Not Found | REDHOT SPORTS',
+      title: 'Video Not Found | REDDY BOOK',
     };
   }
   return {
-    title: `${video.title} | REDHOT SPORTS Videos`,
+    title: `${video.title} | REDDY BOOK Videos`,
     description: video.description,
+    authors: [{ name: video.author.name }],
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
+    alternates: {
+      canonical: `/videos/${video.slug}`,
+    },
     openGraph: {
       title: video.title,
       description: video.description,
@@ -103,7 +118,7 @@ export default function VideoDetailPage({ params }: VideoDetailPageProps) {
                     <EditorialImage
                       src={video.author.avatar}
                       alt={video.author.name}
-                      fallbackSrc="/images/author_1.jpg"
+                      fallbackSrc="/images/author_1.webp"
                     />
                   </div>
                   <span className="author-name">{video.author.name}</span>

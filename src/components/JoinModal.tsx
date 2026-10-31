@@ -42,7 +42,7 @@ export default function JoinModal({
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
           <img
-            src="/images/reddybook-icon.png"
+            src="/images/reddybook-icon.webp"
             alt="Reddy Book Icon"
             style={{ width: 28, height: 28, borderRadius: '50%' }}
           />

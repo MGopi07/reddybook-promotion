@@ -813,45 +813,107 @@
   animation: waPulseRing 1.6s infinite;
 }
 
-.hub-games-marquee-wrapper {
+/* Featured Games Slider & Header Controls */
+.hub-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hub-slider-arrows {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hub-slider-arrow-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.hub-slider-arrow-btn:hover:not(:disabled) {
+  background: rgba(229, 184, 66, 0.15);
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+}
+
+.hub-slider-arrow-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.hub-games-slider-viewport {
   position: relative;
   width: 100%;
   overflow: hidden;
-  padding: 4px 0 10px 0;
-  mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+  border-radius: 12px;
+  padding: 4px 0 4px 0;
 }
 
-.hub-games-marquee-track {
+.hub-games-slider-track {
   display: flex;
-  gap: 14px;
-  width: max-content;
-  animation: hubGamesMarquee 30s linear infinite;
+  gap: 12px;
+  transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
   will-change: transform;
 }
 
-.hub-games-marquee-wrapper:hover .hub-games-marquee-track {
-  animation-play-state: paused;
+.hub-game-card-slider {
+  flex: 0 0 calc((100% - 24px) / 3);
+  width: calc((100% - 24px) / 3);
+  box-sizing: border-box;
 }
 
-@keyframes hubGamesMarquee {
-  0% {
-    transform: translateX(0);
+@media (max-width: 768px) {
+  .hub-game-card-slider {
+    flex: 0 0 calc((100% - 12px) / 2);
+    width: calc((100% - 12px) / 2);
   }
-  100% {
-    transform: translateX(calc(-50% - 7px));
+}
+
+@media (max-width: 480px) {
+  .hub-game-card-slider {
+    flex: 0 0 100%;
+    width: 100%;
   }
 }
 
-.hub-game-card-marquee {
-  width: 185px;
-  flex-shrink: 0;
+.hub-games-slider-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 10px;
 }
 
-.hub-games-grid-4 {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
+.hub-games-slider-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.25s ease;
+}
+
+.hub-games-slider-dot.active {
+  width: 22px;
+  border-radius: 4px;
+  background: var(--accent-gold);
+  box-shadow: 0 0 8px rgba(229, 184, 66, 0.45);
+}
+
+.hub-games-slider-dot:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.4);
 }
 
 .hub-game-card {

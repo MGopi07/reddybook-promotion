@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
-import JoinModal from './JoinModal';
+import React from 'react';
 import '@/styles/ticker.css';
 
 interface BreakingNewsItem {
@@ -58,12 +57,9 @@ const BREAKING_NEWS: BreakingNewsItem[] = [
 ];
 
 export default function NewsTicker() {
-  const [selectedNews, setSelectedNews] = useState<BreakingNewsItem | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   const handleNewsClick = (item: BreakingNewsItem) => {
-    setSelectedNews(item);
-    setIsModalOpen(true);
+    const waUrl = `https://api.whatsapp.com/send/?phone=447868175325&text=Hi+Reddy+Book%21+I+have+an+enquiry+regarding+breaking+news:+${encodeURIComponent(item.headline)}.&type=phone_number&app_absent=0`;
+    window.open(waUrl, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -104,16 +100,6 @@ export default function NewsTicker() {
           </div>
         </div>
       </div>
-
-      {/* Reader / VIP Intel Modal */}
-      {selectedNews && (
-        <JoinModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          title={`BREAKING INTEL: ${selectedNews.headline}`}
-          destinationUrl="https://api.whatsapp.com/send/?phone=447868175325&text=Hi+Reddy+Book%21+I+want+to+join+the+club.&type=phone_number&app_absent=0"
-        />
-      )}
     </div>
   );
 }

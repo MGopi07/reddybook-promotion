@@ -114,7 +114,7 @@ export const SAMPLE_MATCHES: MatchScore[] = [
     status: 'LIVE',
     statusText: 'Broadcasting in 4K HDR • Multi-Language Audio Feed',
     isLiveStreamCard: true,
-    streamImage: '/images/live_stream_card_bg.jpg',
+    streamImage: '/images/live_stream_card_bg.webp',
     streamViewers: '248.5K',
     streamTitle: 'INDIA VS AUSTRALIA',
     streamSubtitle: 'Super 8 Marquee Clash • Watch Every Ball Live in 4K',

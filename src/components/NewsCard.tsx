@@ -50,7 +50,7 @@ export default function NewsCard({ article }: NewsCardProps) {
               <EditorialImage
                 src={article.author.avatar}
                 alt={article.author.name}
-                fallbackSrc="/images/author_1.jpg"
+                fallbackSrc="/images/author_1.webp"
               />
             </div>
             <span className="author-name">{article.author.name}</span>

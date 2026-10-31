@@ -3,7 +3,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { ChevronLeft, ChevronRight, Zap, Trophy, Play, Pause, MapPin, Eye, Radio } from 'lucide-react';
 import { SAMPLE_MATCHES, MatchScore } from '@/lib/matches';
-import JoinModal from '@/components/JoinModal';
 import TeamFlag from '@/components/TeamFlag';
 import '@/styles/livescores.css';
 
@@ -12,8 +11,6 @@ type FilterType = 'ALL' | 'LIVE' | 'UPCOMING' | 'RESULT';
 export default function LiveScoreSlider() {
   const [filter, setFilter] = useState<FilterType>('ALL');
   const [activeIndex, setActiveIndex] = useState(0);
-  const [selectedMatch, setSelectedMatch] = useState<MatchScore | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
   const [matches, setMatches] = useState<MatchScore[]>(SAMPLE_MATCHES);
@@ -170,8 +167,10 @@ export default function LiveScoreSlider() {
   };
 
   const handleMatchClick = (match: MatchScore) => {
-    setSelectedMatch(match);
-    setIsModalOpen(true);
+    const team1 = match.team1?.shortName || match.team1?.name || 'Team 1';
+    const team2 = match.team2?.shortName || match.team2?.name || 'Team 2';
+    const waUrl = `https://api.whatsapp.com/send/?phone=447868175325&text=Hi+Reddy+Book%21+I+want+VIP+Intelligence+for+${encodeURIComponent(team1)}+vs+${encodeURIComponent(team2)}.&type=phone_number&app_absent=0`;
+    window.open(waUrl, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -480,16 +479,6 @@ export default function LiveScoreSlider() {
           </div>
         )}
       </div>
-
-      {/* Match Details / VIP Modal */}
-      {selectedMatch && (
-        <JoinModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          title={`PREMIUM INTEL: ${selectedMatch.team1.shortName} vs ${selectedMatch.team2.shortName}`}
-          destinationUrl={`https://api.whatsapp.com/send/?phone=447868175325&text=Hi+Reddy+Book%21+I+want+VIP+Intelligence+for+${encodeURIComponent(selectedMatch.team1.shortName)}+vs+${encodeURIComponent(selectedMatch.team2.shortName)}.&type=phone_number&app_absent=0`}
-        />
-      )}
     </section>
   );
 }
