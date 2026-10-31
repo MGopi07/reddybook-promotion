@@ -11,13 +11,23 @@ interface JoinModalProps {
   destinationUrl?: string;
 }
 
+const WHATSAPP_JOIN_URL =
+  'https://api.whatsapp.com/send/?phone=447868175325&text=Hi+Reddy+Book%21+I+want+to+join+the+club.&type=phone_number&app_absent=0';
+
 export default function JoinModal({
   isOpen,
   onClose,
   title = 'JOIN REDDY BOOK CLUB',
-  destinationUrl = 'https://reddybook.club',
+  destinationUrl = WHATSAPP_JOIN_URL,
 }: JoinModalProps) {
   if (!isOpen) return null;
+
+  const targetUrl =
+    !destinationUrl ||
+    destinationUrl === 'https://reddybook.club' ||
+    destinationUrl.startsWith('#')
+      ? WHATSAPP_JOIN_URL
+      : destinationUrl;
 
   return (
     <div className="modal-backdrop" onClick={onClose} role="dialog" aria-modal="true">
@@ -60,7 +70,7 @@ export default function JoinModal({
 
         <div className="modal-actions">
           <a
-            href={destinationUrl}
+            href={targetUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn-primary"

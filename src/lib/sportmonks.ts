@@ -80,22 +80,43 @@ export function transformSportmonksToMatchScore(fixture: SportmonksFixture): Mat
 
   // Status mapping
   const rawStatus = (fixture.status || '').trim();
-  const isLive =
-    fixture.live === true ||
-    ['1st Innings', '2nd Innings', '3rd Innings', '4th Innings', 'Innings Break', 'Lunch', 'Tea', 'Stumps', 'Rain Delay'].some(
-      (s) => rawStatus.toLowerCase().includes(s.toLowerCase())
-    );
+  const rawNote = (fixture.note || '').trim();
+  const lowerStatus = rawStatus.toLowerCase();
+  const lowerNote = rawNote.toLowerCase();
+
+  const isNotStarted =
+    lowerStatus === 'ns' ||
+    lowerStatus === 'not started' ||
+    lowerStatus === 'scheduled' ||
+    lowerStatus === 'delayed';
 
   const isFinished =
-    ['Finished', 'Aban.', 'Postp.', 'Cancl.'].some((s) =>
-      rawStatus.toLowerCase().includes(s.toLowerCase())
-    ) || fixture.winner_team_id !== null && fixture.winner_team_id !== undefined;
+    ['finished', 'aban.', 'postp.', 'cancl.', 'ft', 'ended', 'concluded', 'result'].some((s) =>
+      lowerStatus.includes(s)
+    ) ||
+    lowerNote.includes('won by') ||
+    lowerNote.includes('won the') ||
+    lowerNote.includes('match tied') ||
+    lowerNote.includes('no result') ||
+    (fixture.winner_team_id !== null && fixture.winner_team_id !== undefined);
+
+  const isLive =
+    !isNotStarted &&
+    !isFinished &&
+    (
+      ['1st innings', '2nd innings', '3rd innings', '4th innings', 'innings break', 'lunch', 'tea', 'stumps', 'rain delay', 'super over'].some(
+        (s) => lowerStatus.includes(s)
+      ) ||
+      (fixture.live === true && !isNotStarted && !isFinished)
+    );
 
   let matchStatus: 'LIVE' | 'UPCOMING' | 'RESULT' = 'UPCOMING';
-  if (isLive) {
-    matchStatus = 'LIVE';
-  } else if (isFinished) {
+  if (isFinished) {
     matchStatus = 'RESULT';
+  } else if (isLive) {
+    matchStatus = 'LIVE';
+  } else {
+    matchStatus = 'UPCOMING';
   }
 
   // Format series / league title
@@ -109,13 +130,23 @@ export function transformSportmonksToMatchScore(fixture: SportmonksFixture): Mat
     : 'International Stadium';
 
   // Format status headline
-  let statusText = fixture.note || fixture.status || 'Match Scheduled';
-  if (matchStatus === 'UPCOMING' && fixture.starting_at) {
-    try {
-      const startTime = new Date(fixture.starting_at);
-      statusText = `Starts at ${startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
-    } catch {
-      statusText = 'Starts Soon';
+  let statusText = fixture.note || '';
+  if (!statusText || statusText.toUpperCase() === 'NS') {
+    if (matchStatus === 'UPCOMING') {
+      if (fixture.starting_at) {
+        try {
+          const startTime = new Date(fixture.starting_at);
+          statusText = `Starts at ${startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+        } catch {
+          statusText = 'Match Starts Soon';
+        }
+      } else {
+        statusText = 'Match Scheduled';
+      }
+    } else if (matchStatus === 'RESULT') {
+      statusText = 'Match Concluded';
+    } else {
+      statusText = fixture.status && fixture.status !== 'NS' ? fixture.status : 'Match in Progress';
     }
   }
 

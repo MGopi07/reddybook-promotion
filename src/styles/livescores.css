@@ -250,6 +250,7 @@
 .match-slider-viewport {
   position: relative;
   width: 100%;
+  overflow: hidden;
 }
 
 .match-slider-track {
@@ -271,8 +272,9 @@
 
 /* Match Card - Luxury Frosted Glassmorphism */
 .match-card {
-  flex: 0 0 calc((100% - 44px) / 3);
-  min-width: calc((100% - 44px) / 3);
+  flex: 0 0 calc((100% - 28px) / 3);
+  min-width: calc((100% - 28px) / 3);
+  max-width: calc((100% - 28px) / 3);
   scroll-snap-align: start;
   background: linear-gradient(
     145deg,
@@ -862,8 +864,9 @@
 /* Responsive Breakpoints */
 @media (max-width: 1099px) {
   .match-card {
-    flex: 0 0 calc((100% - 30px) / 2);
-    min-width: calc((100% - 30px) / 2);
+    flex: 0 0 calc((100% - 14px) / 2);
+    min-width: calc((100% - 14px) / 2);
+    max-width: calc((100% - 14px) / 2);
   }
 }
 
@@ -890,8 +893,9 @@
   }
 
   .match-card {
-    flex: 0 0 88%;
-    min-width: 88%;
+    flex: 0 0 100%;
+    min-width: 100%;
+    max-width: 100%;
     padding: 13px 14px;
   }
 }

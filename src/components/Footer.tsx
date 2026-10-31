@@ -91,13 +91,27 @@ export default function Footer() {
                 <Link href="/news" className="footer-nav-link">Latest Stories</Link>
               </li>
               <li>
-                <Link href="/news?category=Match+Previews" className="footer-nav-link">Match Previews</Link>
+                <a
+                  href="https://api.whatsapp.com/send/?phone=447868175325&text=Hi+Reddy+Book%21+I+need+Match+Previews.&type=phone_number&app_absent=0"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-nav-link"
+                >
+                  Match Previews
+                </a>
               </li>
               <li>
                 <Link href="/news?category=Match+Reviews" className="footer-nav-link">Match Reviews</Link>
               </li>
               <li>
-                <Link href="/news?category=Analysis" className="footer-nav-link">Tactical Analysis</Link>
+                <a
+                  href="https://api.whatsapp.com/send/?phone=447868175325&text=Hi+Reddy+Book%21+I+need+Match+Analysis.&type=phone_number&app_absent=0"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-nav-link"
+                >
+                  Tactical Analysis
+                </a>
               </li>
               <li>
                 <Link href="/news?category=IPL" className="footer-nav-link">IPL Hub</Link>
@@ -107,22 +121,22 @@ export default function Footer() {
 
           {/* Media & Gaming Hub */}
           <div>
-            <h4 className="footer-heading">Media & Club</h4>
+            <h4 className="footer-heading">Company &amp; Legal</h4>
             <ul className="footer-nav-list">
               <li>
-                <Link href="/videos" className="footer-nav-link">Video Highlights</Link>
+                <Link href="/about-us" className="footer-nav-link">About Us</Link>
               </li>
               <li>
-                <Link href="/videos" className="footer-nav-link">Masterclasses</Link>
+                <Link href="/contact-us" className="footer-nav-link">Contact Support</Link>
               </li>
               <li>
-                <Link href="/news?category=T20" className="footer-nav-link">T20 Tournaments</Link>
+                <Link href="/terms-and-conditions" className="footer-nav-link">Terms &amp; Conditions</Link>
               </li>
               <li>
-                <a href="#join-redhot" className="footer-nav-link">REDDY BOOK VIP Club</a>
+                <Link href="/privacy-policy" className="footer-nav-link">Privacy Policy</Link>
               </li>
               <li>
-                <a href="#promotions" className="footer-nav-link">Game Day Offers</a>
+                <Link href="/videos" className="footer-nav-link">Highlights &amp; Videos</Link>
               </li>
             </ul>
           </div>
@@ -159,7 +173,7 @@ export default function Footer() {
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           title="JOIN REDDY BOOK VIP CLUB"
-          destinationUrl="https://reddybook.club"
+          destinationUrl="https://api.whatsapp.com/send/?phone=447868175325&text=Hi+Reddy+Book%21+I+want+to+join+the+club.&type=phone_number&app_absent=0"
         />
 
         {/* Footer Bottom */}
@@ -168,10 +182,11 @@ export default function Footer() {
             © {new Date().getFullYear()} {BRAND_CONFIG.name}. All rights reserved. Reddy Book is an independent editorial cricket publication and gaming promotion destination. All trademarks and player names belong to their respective copyright holders.
           </p>
 
-          <div style={{ display: 'flex', gap: 16 }}>
-            <Link href="/news" className="footer-nav-link">Privacy Policy</Link>
-            <Link href="/news" className="footer-nav-link">Terms of Service</Link>
-            <Link href="/news" className="footer-nav-link">Editorial Guidelines</Link>
+          <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+            <Link href="/about-us" className="footer-nav-link">About Us</Link>
+            <Link href="/contact-us" className="footer-nav-link">Contact Us</Link>
+            <Link href="/privacy-policy" className="footer-nav-link">Privacy Policy</Link>
+            <Link href="/terms-and-conditions" className="footer-nav-link">Terms &amp; Conditions</Link>
           </div>
         </div>
       </div>

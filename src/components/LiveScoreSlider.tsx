@@ -456,7 +456,7 @@ export default function LiveScoreSlider() {
                     </span>
                     <span className="btn-match-action">
                       <Zap size={11} />
-                      <span>{match.status === 'LIVE' ? 'VIP Odds' : 'Preview'}</span>
+                      <span>{match.status === 'LIVE' ? 'VIP Odds' : match.status === 'RESULT' ? 'Scorecard' : 'Preview'}</span>
                     </span>
                   </div>
                 </article>
@@ -487,7 +487,7 @@ export default function LiveScoreSlider() {
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           title={`PREMIUM INTEL: ${selectedMatch.team1.shortName} vs ${selectedMatch.team2.shortName}`}
-          destinationUrl="https://reddybook.club"
+          destinationUrl={`https://api.whatsapp.com/send/?phone=447868175325&text=Hi+Reddy+Book%21+I+want+VIP+Intelligence+for+${encodeURIComponent(selectedMatch.team1.shortName)}+vs+${encodeURIComponent(selectedMatch.team2.shortName)}.&type=phone_number&app_absent=0`}
         />
       )}
     </section>

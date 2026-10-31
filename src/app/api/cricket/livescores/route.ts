@@ -44,13 +44,7 @@ export async function GET() {
       const liveJson = await liveRes.json();
       const liveFixtures: SportmonksFixture[] = Array.isArray(liveJson.data) ? liveJson.data : [];
       liveFixtures.forEach((f) => {
-        const transformed = transformSportmonksToMatchScore(f);
-        if (f.winner_team_id || (f.status && ['Finished', 'Aban.', 'Cancl.'].some((s) => f.status.includes(s)))) {
-          transformed.status = 'RESULT';
-        } else if (f.live || ['1st Innings', '2nd Innings', 'Innings Break', 'Super Over'].some((s) => (f.status || '').includes(s))) {
-          transformed.status = 'LIVE';
-        }
-        addUniqueMatch(transformed);
+        addUniqueMatch(transformSportmonksToMatchScore(f));
       });
     }
 

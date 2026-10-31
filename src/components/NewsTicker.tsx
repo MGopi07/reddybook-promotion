@@ -111,7 +111,7 @@ export default function NewsTicker() {
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           title={`BREAKING INTEL: ${selectedNews.headline}`}
-          destinationUrl="https://reddybook.club"
+          destinationUrl="https://api.whatsapp.com/send/?phone=447868175325&text=Hi+Reddy+Book%21+I+want+to+join+the+club.&type=phone_number&app_absent=0"
         />
       )}
     </div>

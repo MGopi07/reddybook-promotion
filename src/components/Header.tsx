@@ -14,6 +14,10 @@ import {
   Calendar,
   TrendingUp,
   ShieldCheck,
+  Info,
+  PhoneCall,
+  FileText,
+  Lock,
 } from 'lucide-react';
 import { BRAND_CONFIG } from '@/lib/content';
 import JoinModal from './JoinModal';
@@ -24,12 +28,34 @@ export default function Header() {
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
   const pathname = usePathname();
 
+  const WHATSAPP_MATCH_PREVIEWS =
+    'https://api.whatsapp.com/send/?phone=447868175325&text=Hi+Reddy+Book%21+I+need+Match+Previews.&type=phone_number&app_absent=0';
+  const WHATSAPP_ANALYSIS =
+    'https://api.whatsapp.com/send/?phone=447868175325&text=Hi+Reddy+Book%21+I+need+Match+Analysis.&type=phone_number&app_absent=0';
+
   const navLinks = [
     { label: 'Home', href: '/', icon: <Home size={18} /> },
     { label: 'News', href: '/news', icon: <Newspaper size={18} /> },
     { label: 'Videos', href: '/videos', icon: <Video size={18} /> },
-    { label: 'Match Previews', href: '/news?category=Match+Previews', icon: <Calendar size={18} /> },
-    { label: 'Analysis', href: '/news?category=Analysis', icon: <TrendingUp size={18} /> },
+    {
+      label: 'Match Previews',
+      href: WHATSAPP_MATCH_PREVIEWS,
+      icon: <Calendar size={18} />,
+      isExternal: true,
+    },
+    {
+      label: 'Analysis',
+      href: WHATSAPP_ANALYSIS,
+      icon: <TrendingUp size={18} />,
+      isExternal: true,
+    },
+  ];
+
+  const companyLinks = [
+    { label: 'About Us', href: '/about-us', icon: <Info size={18} /> },
+    { label: 'Contact Support', href: '/contact-us', icon: <PhoneCall size={18} /> },
+    { label: 'Terms & Conditions', href: '/terms-and-conditions', icon: <FileText size={18} /> },
+    { label: 'Privacy Policy', href: '/privacy-policy', icon: <Lock size={18} /> },
   ];
 
   // Prevent background scrolling when offcanvas is open & support Escape key
@@ -50,6 +76,7 @@ export default function Header() {
   }, [mobileMenuOpen]);
 
   const isActive = (href: string) => {
+    if (href.startsWith('http')) return false;
     if (href === '/') return pathname === '/';
     if (href.includes('?')) {
       return pathname.startsWith('/news') && typeof window !== 'undefined' && window.location.search.includes(href.split('?')[1]);
@@ -72,15 +99,27 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <nav className="main-nav" aria-label="Main Navigation">
-            {navLinks.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                className={`nav-link ${isActive(link.href) ? 'active' : ''}`}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {navLinks.map((link) =>
+              link.isExternal ? (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="nav-link"
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className={`nav-link ${isActive(link.href) ? 'active' : ''}`}
+                >
+                  {link.label}
+                </Link>
+              )
+            )}
           </nav>
 
           {/* Header Actions */}
@@ -150,7 +189,44 @@ export default function Header() {
           <div className="offcanvas-nav-group">
             <span className="offcanvas-section-label">Navigation</span>
             <nav className="offcanvas-nav-links">
-              {navLinks.map((link) => (
+              {navLinks.map((link) =>
+                link.isExternal ? (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="offcanvas-nav-link"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <div className="offcanvas-link-left">
+                      <span className="offcanvas-link-icon">{link.icon}</span>
+                      <span>{link.label}</span>
+                    </div>
+                    <ChevronRight size={16} className="offcanvas-chevron" />
+                  </a>
+                ) : (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    className={`offcanvas-nav-link ${isActive(link.href) ? 'active' : ''}`}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <div className="offcanvas-link-left">
+                      <span className="offcanvas-link-icon">{link.icon}</span>
+                      <span>{link.label}</span>
+                    </div>
+                    <ChevronRight size={16} className="offcanvas-chevron" />
+                  </Link>
+                )
+              )}
+            </nav>
+          </div>
+
+          <div className="offcanvas-nav-group" style={{ marginTop: '16px' }}>
+            <span className="offcanvas-section-label">Company &amp; Legal</span>
+            <nav className="offcanvas-nav-links">
+              {companyLinks.map((link) => (
                 <Link
                   key={link.label}
                   href={link.href}
